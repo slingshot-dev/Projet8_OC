@@ -39,8 +39,8 @@ public class RewardsService {
 	
 	public void calculateRewards(User user) {
 		List<VisitedLocation> userLocations = new CopyOnWriteArrayList(user.getVisitedLocations()); // modifier par Olivier CopyOnWriteArrayList. Voir pour positionner plutot sur le getter.
-		List<Attraction> attractions = gpsUtil.getAttractions();
-		
+		List<Attraction> attractions = new CopyOnWriteArrayList(gpsUtil.getAttractions());
+
 		for(VisitedLocation visitedLocation : userLocations) {
 			for(Attraction attraction : attractions) {
 				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {

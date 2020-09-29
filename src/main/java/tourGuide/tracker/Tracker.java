@@ -36,6 +36,7 @@ public class Tracker extends Thread {
 	
 	@Override
 	public void run() {
+		Locale.setDefault(Locale.US);
 		StopWatch stopWatch = new StopWatch();
 		while(true) {
 			if(Thread.currentThread().isInterrupted() || stop) {
