@@ -1,5 +1,6 @@
 package tourGuide.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,7 +21,7 @@ public class RewardsService {
 	// proximity in miles
     private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
-	private int attractionProximityRange = 200;
+	private int attractionProximityRange = 20000;
 	private final GpsUtil gpsUtil;
 	private final RewardCentral rewardsCentral;
 	
@@ -36,10 +37,18 @@ public class RewardsService {
 	public void setDefaultProximityBuffer() {
 		proximityBuffer = defaultProximityBuffer;
 	}
+
+	public void setAttractionProximityRange(int attractionProximityRange) {
+		this.attractionProximityRange = attractionProximityRange;
+	}
 	
-	public void calculateRewards(User user) {
-		List<VisitedLocation> userLocations = new CopyOnWriteArrayList(user.getVisitedLocations()); // modifier par Olivier CopyOnWriteArrayList. Voir pour positionner plutot sur le getter.
-		List<Attraction> attractions = new CopyOnWriteArrayList(gpsUtil.getAttractions());
+	public synchronized void calculateRewards(User user) {
+
+/*		List<VisitedLocation> userLocations = user.getVisitedLocations();
+		List<Attraction> attractions = gpsUtil.getAttractions();*/
+
+		ArrayList<Attraction> attractions = new ArrayList(gpsUtil.getAttractions());
+		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
 
 		for(VisitedLocation visitedLocation : userLocations) {
 			for(Attraction attraction : attractions) {
@@ -51,13 +60,26 @@ public class RewardsService {
 			}
 		}
 	}
+
+/*		userLocations.forEach(visitedLocation -> {
+			attractions.forEach(attraction ->
+			{
+				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0)
+				{
+					if(nearAttraction(visitedLocation, attraction)) {
+						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+					}
+				}
+			});
+		});
+	}*/
 	
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
-		return getDistance(attraction, location) > attractionProximityRange ? false : true;
+		return getDistance(attraction, location) < attractionProximityRange;
 	}
 	
 	private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
-		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
+		return getDistance(attraction, visitedLocation.location) < proximityBuffer;
 	}
 	
 	private int getRewardPoints(Attraction attraction, User user) {
