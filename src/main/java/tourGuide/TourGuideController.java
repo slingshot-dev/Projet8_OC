@@ -1,29 +1,42 @@
 package tourGuide;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.jsoniter.output.JsonStream;
-
 import gpsUtil.location.VisitedLocation;
+import org.springframework.web.client.RestTemplate;
+import tourGuide.Modeles.Attractions;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tripPricer.Provider;
+
 
 @RestController
 public class TourGuideController {
 
 	@Autowired
 	TourGuideService tourGuideService;
+	@Autowired
+    RestTemplate restTemplate;
+
 	
     @RequestMapping("/")
     public String index() {
         return "Greetings from TourGuide!";
     }
+
     
     @RequestMapping("/getLocation") 
     public String getLocation(@RequestParam String userName) {
@@ -75,6 +88,30 @@ public class TourGuideController {
     private User getUser(String userName) {
     	return tourGuideService.getUser(userName);
     }
-   
+
+
+/*    @RequestMapping("/test")
+    public ResponseEntity<List<Attractions>> test() {
+        ResponseEntity<List<Attractions>> response;
+        List<Attractions> Response2;
+        try {
+            response = restTemplate.exchange("http://localhost:8080/getAttractions", HttpMethod.GET, null, Attractions.class);
+        } catch (HttpClientErrorException e) {
+            throw e;
+        }
+        return response;
+    }*/
+
+    @RequestMapping("/test2")
+    public List<Attractions> test2() throws IOException {
+
+        RestTemplate restTemplate = new RestTemplate();
+        String ResourceUrl = "http://localhost:8080/getAttractions";
+        ResponseEntity<String> response = restTemplate.getForEntity(ResourceUrl, String.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(response.getBody(), new TypeReference<List<Attractions>>(){});
+    }
+
+
 
 }
