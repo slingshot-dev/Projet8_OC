@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Attractions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.Modeles</a> &gt; <span class="el_source">Attractions.java</span></div><h1>Attractions.java</h1><pre class="source lang-java linenums">package tourGuide.Modeles;
+
+import org.springframework.stereotype.Component;
+
+public class Attractions {
+
+    private double longitude;
+    private double latitude;
+    private String attractionName;
+    private String city;
+    private String state;
+    private String attractionId;
+
+<span class="nc" id="L14">    public Attractions(double longitude, double latitude, String attractionName, String city, String state, String attractionId) {</span>
+<span class="nc" id="L15">        this.longitude = longitude;</span>
+<span class="nc" id="L16">        this.latitude = latitude;</span>
+<span class="nc" id="L17">        this.attractionName = attractionName;</span>
+<span class="nc" id="L18">        this.city = city;</span>
+<span class="nc" id="L19">        this.state = state;</span>
+<span class="nc" id="L20">        this.attractionId = attractionId;</span>
+<span class="nc" id="L21">    }</span>
+
+<span class="nc" id="L23">    public Attractions() {</span>
+<span class="nc" id="L24">    }</span>
+
+    public double getLongitude() {
+<span class="nc" id="L27">        return longitude;</span>
+    }
+
+    public void setLongitude(double longitude) {
+<span class="nc" id="L31">        this.longitude = longitude;</span>
+<span class="nc" id="L32">    }</span>
+
+    public double getLatitude() {
+<span class="nc" id="L35">        return latitude;</span>
+    }
+
+    public void setLatitude(double latitude) {
+<span class="nc" id="L39">        this.latitude = latitude;</span>
+<span class="nc" id="L40">    }</span>
+
+    public String getAttractionName() {
+<span class="nc" id="L43">        return attractionName;</span>
+    }
+
+    public void setAttractionName(String attractionName) {
+<span class="nc" id="L47">        this.attractionName = attractionName;</span>
+<span class="nc" id="L48">    }</span>
+
+    public String getCity() {
+<span class="nc" id="L51">        return city;</span>
+    }
+
+    public void setCity(String city) {
+<span class="nc" id="L55">        this.city = city;</span>
+<span class="nc" id="L56">    }</span>
+
+    public String getState() {
+<span class="nc" id="L59">        return state;</span>
+    }
+
+    public void setState(String state) {
+<span class="nc" id="L63">        this.state = state;</span>
+<span class="nc" id="L64">    }</span>
+
+    public String getAttractionId() {
+<span class="nc" id="L67">        return attractionId;</span>
+    }
+
+    public void setAttractionId(String attractionId) {
+<span class="nc" id="L71">        this.attractionId = attractionId;</span>
+<span class="nc" id="L72">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

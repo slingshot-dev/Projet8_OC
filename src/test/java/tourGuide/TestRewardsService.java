@@ -1,29 +1,29 @@
 package tourGuide;
 
-import static org.junit.Assert.*;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-
-import org.junit.Ignore;
+import Modeles.Attraction;
+import Modeles.VisitedLocation;
 import org.junit.Test;
-
-import gpsUtil.GpsUtil;
-import gpsUtil.location.Attraction;
-import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
+import tourGuide.service.GpsUtil;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class TestRewardsService {
 
 	@Test
-	public void userGetRewards() {
+	public void userGetRewards() throws IOException {
 		Locale.setDefault(Locale.US);
 
 		GpsUtil gpsUtil = new GpsUtil();
@@ -42,7 +42,7 @@ public class TestRewardsService {
 	}
 
 	@Test
-	public void isWithinAttractionProximity() {
+	public void isWithinAttractionProximity() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		Attraction attraction = gpsUtil.getAttractions().get(0);
@@ -51,7 +51,7 @@ public class TestRewardsService {
 
 	// Needs fixed - can throw ConcurrentModificationException
 	@Test
-	public void nearAllAttractions() {
+	public void nearAllAttractions() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		rewardsService.setProximityBuffer(Integer.MAX_VALUE);

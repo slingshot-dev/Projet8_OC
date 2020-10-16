@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RewardsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.service</a> &gt; <span class="el_source">RewardsService.java</span></div><h1>RewardsService.java</h1><pre class="source lang-java linenums">package tourGuide.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import Modeles.Attraction;
+import Modeles.Location;
+import Modeles.VisitedLocation;
 import org.springframework.stereotype.Service;
 
-import gpsUtil.GpsUtil;
-import gpsUtil.location.Attraction;
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
@@ -19,85 +18,76 @@ public class RewardsService {
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 
 	// proximity in miles
-<span class="fc" id="L22">    private int defaultProximityBuffer = 10;</span>
-<span class="fc" id="L23">	private int proximityBuffer = defaultProximityBuffer;</span>
-<span class="fc" id="L24">	private int attractionProximityRange = 20000;</span>
-	private final GpsUtil gpsUtil;
+<span class="fc" id="L21">    private int defaultProximityBuffer = 10;</span>
+<span class="fc" id="L22">	private int proximityBuffer = defaultProximityBuffer;</span>
+<span class="fc" id="L23">	private int attractionProximityRange = 20000;</span>
+	private final tourGuide.service.GpsUtil gpsUtil;
 	private final RewardCentral rewardsCentral;
-	
-<span class="fc" id="L28">	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardCentral) {</span>
-<span class="fc" id="L29">		this.gpsUtil = gpsUtil;</span>
-<span class="fc" id="L30">		this.rewardsCentral = rewardCentral;</span>
-<span class="fc" id="L31">	}</span>
-	
+
+<span class="fc" id="L27">	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardsCentral) {</span>
+<span class="fc" id="L28">		this.gpsUtil = gpsUtil;</span>
+<span class="fc" id="L29">		this.rewardsCentral = rewardsCentral;</span>
+<span class="fc" id="L30">	}</span>
+
+
+
 	public void setProximityBuffer(int proximityBuffer) {
-<span class="fc" id="L34">		this.proximityBuffer = proximityBuffer;</span>
-<span class="fc" id="L35">	}</span>
+<span class="nc" id="L35">		this.proximityBuffer = proximityBuffer;</span>
+<span class="nc" id="L36">	}</span>
 	
 	public void setDefaultProximityBuffer() {
-<span class="nc" id="L38">		proximityBuffer = defaultProximityBuffer;</span>
-<span class="nc" id="L39">	}</span>
+<span class="nc" id="L39">		proximityBuffer = defaultProximityBuffer;</span>
+<span class="nc" id="L40">	}</span>
 
 	public void setAttractionProximityRange(int attractionProximityRange) {
-<span class="nc" id="L42">		this.attractionProximityRange = attractionProximityRange;</span>
-<span class="nc" id="L43">	}</span>
+<span class="nc" id="L43">		this.attractionProximityRange = attractionProximityRange;</span>
+<span class="nc" id="L44">	}</span>
 	
-	public synchronized void calculateRewards(User user) {
+	public synchronized void calculateRewards(User user) throws IOException {
 
 /*		List&lt;VisitedLocation&gt; userLocations = user.getVisitedLocations();
 		List&lt;Attraction&gt; attractions = gpsUtil.getAttractions();*/
 
-<span class="fc" id="L50">		ArrayList&lt;Attraction&gt; attractions = new ArrayList(gpsUtil.getAttractions());</span>
-<span class="fc" id="L51">		List&lt;VisitedLocation&gt; userLocations = new ArrayList&lt;&gt;(user.getVisitedLocations());</span>
+<span class="fc" id="L51">		ArrayList&lt;Attraction&gt; attractions = new ArrayList(gpsUtil.getAttractions());</span>
+<span class="fc" id="L52">		List&lt;VisitedLocation&gt; userLocations = new ArrayList&lt;&gt;(user.getVisitedLocations());</span>
 
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		for(VisitedLocation visitedLocation : userLocations) {</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">			for(Attraction attraction : attractions) {</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">				if(user.getUserRewards().stream().filter(r -&gt; r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">					if(nearAttraction(visitedLocation, attraction)) {</span>
-<span class="fc" id="L57">						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for(VisitedLocation visitedLocation : userLocations) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">			for(Attraction attraction : attractions) {</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">				if(user.getUserRewards().stream().filter(r -&gt; r.attraction.getAttractionName().equals(attraction.getAttractionName())).count() == 0) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">					if(nearAttraction(visitedLocation, attraction)) {</span>
+<span class="nc" id="L59">						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));</span>
 					}
 				}
-<span class="fc" id="L60">			}</span>
-<span class="fc" id="L61">		}</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L62">			}</span>
+<span class="fc" id="L63">		}</span>
+<span class="fc" id="L64">	}</span>
 
-/*		userLocations.forEach(visitedLocation -&gt; {
-			attractions.forEach(attraction -&gt;
-			{
-				if(user.getUserRewards().stream().filter(r -&gt; r.attraction.attractionName.equals(attraction.attractionName)).count() == 0)
-				{
-					if(nearAttraction(visitedLocation, attraction)) {
-						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
-					}
-				}
-			});
-		});
-	}*/
-	
-	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		return getDistance(attraction, location) &lt; attractionProximityRange;</span>
+
+	public boolean isWithinAttractionProximity(Attraction attraction, Location visitedLocation) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		return getDistance(attraction, visitedLocation) &lt; attractionProximityRange;</span>
 	}
 	
 	private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		return getDistance(attraction, visitedLocation.location) &lt; proximityBuffer;</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		return getDistance(attraction, visitedLocation.getLocation()) &lt; proximityBuffer;</span>
 	}
 	
 	private int getRewardPoints(Attraction attraction, User user) {
-<span class="fc" id="L86">		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());</span>
+<span class="nc" id="L76">		return rewardsCentral.getAttractionRewardPoints(attraction.getAttractionId(), user.getUserId());</span>
 	}
 	
 	public double getDistance(Location loc1, Location loc2) {
-<span class="fc" id="L90">        double lat1 = Math.toRadians(loc1.latitude);</span>
-<span class="fc" id="L91">        double lon1 = Math.toRadians(loc1.longitude);</span>
-<span class="fc" id="L92">        double lat2 = Math.toRadians(loc2.latitude);</span>
-<span class="fc" id="L93">        double lon2 = Math.toRadians(loc2.longitude);</span>
+<span class="fc" id="L80">        double lat1 = Math.toRadians(loc1.getLatitude());</span>
+<span class="fc" id="L81">        double lon1 = Math.toRadians(loc1.getLongitude());</span>
+<span class="fc" id="L82">        double lat2 = Math.toRadians(loc2.getLatitude());</span>
+<span class="fc" id="L83">        double lon2 = Math.toRadians(loc2.getLongitude());</span>
 
-<span class="fc" id="L95">        double angle = Math.acos(Math.sin(lat1) * Math.sin(lat2)</span>
-<span class="fc" id="L96">                               + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));</span>
+<span class="fc" id="L85">        double angle = Math.acos(Math.sin(lat1) * Math.sin(lat2)</span>
+<span class="fc" id="L86">                               + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));</span>
 
-<span class="fc" id="L98">        double nauticalMiles = 60 * Math.toDegrees(angle);</span>
-<span class="fc" id="L99">        double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;</span>
-<span class="fc" id="L100">        return statuteMiles;</span>
+<span class="fc" id="L88">        double nauticalMiles = 60 * Math.toDegrees(angle);</span>
+<span class="fc" id="L89">        double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;</span>
+<span class="fc" id="L90">        return statuteMiles;</span>
 	}
 
 }

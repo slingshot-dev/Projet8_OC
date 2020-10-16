@@ -1,30 +1,29 @@
 package tourGuide;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-
-import org.junit.Ignore;
+import Modeles.Attraction;
+import Modeles.VisitedLocation;
 import org.junit.Test;
-
-import gpsUtil.GpsUtil;
-import gpsUtil.location.Attraction;
-import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
+import tourGuide.service.GpsUtil;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tripPricer.Provider;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class TestTourGuideService {
 
 
 	@Test
-	public void getUserLocation() {
+	public void getUserLocation() throws IOException {
 		Locale.setDefault(Locale.US);
 
 		GpsUtil gpsUtil = new GpsUtil();
@@ -82,7 +81,7 @@ public class TestTourGuideService {
 	}
 	
 	@Test
-	public void trackUser() {
+	public void trackUser() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
@@ -98,7 +97,7 @@ public class TestTourGuideService {
 	
 	// Not yet implemented
 	@Test
-	public void getNearbyAttractions() {
+	public void getNearbyAttractions() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		rewardsService.setAttractionProximityRange(Integer.MAX_VALUE);

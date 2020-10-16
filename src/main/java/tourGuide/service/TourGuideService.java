@@ -1,5 +1,6 @@
 package tourGuide.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -9,25 +10,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import Modeles.Attraction;
+import Modeles.Location;
+import Modeles.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import gpsUtil.GpsUtil;
-import gpsUtil.location.Attraction;
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
+
 
 @Service
 public class TourGuideService {
@@ -56,7 +54,7 @@ public class TourGuideService {
 		return user.getUserRewards();
 	}
 	
-	public VisitedLocation getUserLocation(User user) {
+	public VisitedLocation getUserLocation(User user) throws IOException {
 		VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
 			user.getLastVisitedLocation() :
 			trackUserLocation(user);
@@ -85,7 +83,7 @@ public class TourGuideService {
 		return providers;
 	}
 	
-	public VisitedLocation trackUserLocation(User user) {
+	public VisitedLocation trackUserLocation(User user) throws IOException {
 		logger.debug("start get User Location");
 		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
 		logger.debug("Add Visited Location");
@@ -95,8 +93,9 @@ public class TourGuideService {
 		return visitedLocation;
 	}
 
-	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
+	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) throws IOException {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
+
 		for(Attraction attraction : gpsUtil.getAttractions()) {
 			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
 				nearbyAttractions.add(attraction);
