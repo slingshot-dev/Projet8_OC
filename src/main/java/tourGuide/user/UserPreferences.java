@@ -16,6 +16,7 @@ public class UserPreferences {
 	private int ticketQuantity = 1;
 	private int numberOfAdults = 1;
 	private int numberOfChildren = 0;
+	private int numberOfAttractions = 5;
 	
 	public UserPreferences() {
 	}
@@ -76,4 +77,11 @@ public class UserPreferences {
 		this.numberOfChildren = numberOfChildren;
 	}
 
+	public int getNumberOfAttractions() {
+		return numberOfAttractions;
+	}
+
+	public void setNumberOfAttractions(int numberOfAttractions) {
+		this.numberOfAttractions = numberOfAttractions;
+	}
 }

@@ -3,13 +3,7 @@ package tourGuide.service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,10 +12,13 @@ import Modeles.Location;
 import Modeles.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tourGuide.Modeles.AttractionsFromUser;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
+import tourGuide.user.UserLocation;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
@@ -35,6 +32,7 @@ public class TourGuideService {
 	private final TripPricer tripPricer = new TripPricer();
 	public final Tracker tracker;
 	boolean testMode = true;
+
 
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
 		this.gpsUtil = gpsUtil;
@@ -104,6 +102,55 @@ public class TourGuideService {
 		
 		return nearbyAttractions;
 	}
+
+
+	public List<AttractionsFromUser> getFiveAttrations(VisitedLocation visitedLocation, User user) throws IOException {
+
+		List<Attraction> attractions = gpsUtil.getAttractions();
+		List<AttractionsFromUser> allAttractions = attractions.parallelStream()
+				.map(a -> {
+					try {
+						return new AttractionsFromUser(a.attractionName, a.latitude, a.longitude, visitedLocation.location,
+								rewardsService.getDistance(a, visitedLocation.location),
+								rewardsService.getRewardPoints(a, user));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					return null;
+				})
+				.sorted(Comparator.comparingDouble(AttractionsFromUser::getDistance))
+				.collect(Collectors.toList());
+
+		List<AttractionsFromUser> closestAttractions = allAttractions.stream().
+				limit(user.getUserPreferences().getNumberOfAttractions()).collect(Collectors.toList());
+
+		return closestAttractions;
+
+	}
+
+
+	public List<UserLocation> getUserLocation(){
+
+/*		List<UserLocation> userPosition = internalUserMap.values().stream()
+				.map(u -> new UserLocation(u.getUserId(),
+						u.getVisitedLocations().stream().
+								map(l -> new Location(l.location.latitude,l.location.longitude)).collect(Collectors.toList())))
+				.collect(Collectors.toList());
+
+		return userPosition;*/
+
+		List<UserLocation> userLocations = new ArrayList<>();
+		List<User> userList = getAllUsers();
+		for (User user : userList) {
+
+			VisitedLocation lastVisitedLocation = user.getLastVisitedLocation();
+			Location location = new Location(lastVisitedLocation.location.latitude,lastVisitedLocation.location.longitude);
+			UserLocation userLocation = new UserLocation(user.getUserId(),location);
+			userLocations.add(userLocation);
+		}
+		return userLocations;
+	}
+
 	
 	private void addShutDownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() { 

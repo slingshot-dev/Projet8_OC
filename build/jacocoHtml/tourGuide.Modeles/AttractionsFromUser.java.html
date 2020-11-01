@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AttractionsFromUser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.Modeles</a> &gt; <span class="el_source">AttractionsFromUser.java</span></div><h1>AttractionsFromUser.java</h1><pre class="source lang-java linenums">package tourGuide.Modeles;
 
+import Modeles.Location;
+
 public class AttractionsFromUser {
 
     //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
@@ -14,75 +16,67 @@ public class AttractionsFromUser {
     private String attractionName;
     private double attractionLatitude;
     private double attractionLongitude;
-    private double userLocationLatitude;
-    private double userLocationLongitude;
+/*    private double userLocationLatitude;
+    private double userLocationLongitude;*/
+    private Location userLocation;
     private double distance;
     private int rewardPoints;
 
-<span class="nc" id="L22">    public AttractionsFromUser(String attractionName, double attractionLatitude, double attractionLongitude, double userLocationLatitude, double userLocationLongitude, double distance, int rewardPoints) {</span>
-<span class="nc" id="L23">        this.attractionName = attractionName;</span>
-<span class="nc" id="L24">        this.attractionLatitude = attractionLatitude;</span>
-<span class="nc" id="L25">        this.attractionLongitude = attractionLongitude;</span>
-<span class="nc" id="L26">        this.userLocationLatitude = userLocationLatitude;</span>
-<span class="nc" id="L27">        this.userLocationLongitude = userLocationLongitude;</span>
-<span class="nc" id="L28">        this.distance = distance;</span>
-<span class="nc" id="L29">        this.rewardPoints = rewardPoints;</span>
-<span class="nc" id="L30">    }</span>
+<span class="nc" id="L25">    public AttractionsFromUser(String attractionName, double attractionLatitude, double attractionLongitude, Location userLocation, double distance, int rewardPoints) {</span>
+<span class="nc" id="L26">        this.attractionName = attractionName;</span>
+<span class="nc" id="L27">        this.attractionLatitude = attractionLatitude;</span>
+<span class="nc" id="L28">        this.attractionLongitude = attractionLongitude;</span>
+<span class="nc" id="L29">        this.userLocation = userLocation;</span>
+<span class="nc" id="L30">        this.distance = distance;</span>
+<span class="nc" id="L31">        this.rewardPoints = rewardPoints;</span>
+<span class="nc" id="L32">    }</span>
 
     public String getAttractionName() {
-<span class="nc" id="L33">        return attractionName;</span>
+<span class="nc" id="L35">        return attractionName;</span>
     }
 
     public void setAttractionName(String attractionName) {
-<span class="nc" id="L37">        this.attractionName = attractionName;</span>
-<span class="nc" id="L38">    }</span>
+<span class="nc" id="L39">        this.attractionName = attractionName;</span>
+<span class="nc" id="L40">    }</span>
 
     public double getAttractionLatitude() {
-<span class="nc" id="L41">        return attractionLatitude;</span>
+<span class="nc" id="L43">        return attractionLatitude;</span>
     }
 
     public void setAttractionLatitude(double attractionLatitude) {
-<span class="nc" id="L45">        this.attractionLatitude = attractionLatitude;</span>
-<span class="nc" id="L46">    }</span>
+<span class="nc" id="L47">        this.attractionLatitude = attractionLatitude;</span>
+<span class="nc" id="L48">    }</span>
 
     public double getAttractionLongitude() {
-<span class="nc" id="L49">        return attractionLongitude;</span>
+<span class="nc" id="L51">        return attractionLongitude;</span>
     }
 
     public void setAttractionLongitude(double attractionLongitude) {
-<span class="nc" id="L53">        this.attractionLongitude = attractionLongitude;</span>
-<span class="nc" id="L54">    }</span>
+<span class="nc" id="L55">        this.attractionLongitude = attractionLongitude;</span>
+<span class="nc" id="L56">    }</span>
 
-    public double getUserLocationLatitude() {
-<span class="nc" id="L57">        return userLocationLatitude;</span>
+    public Location getUserLocation() {
+<span class="nc" id="L59">        return userLocation;</span>
     }
 
-    public void setUserLocationLatitude(double userLocationLatitude) {
-<span class="nc" id="L61">        this.userLocationLatitude = userLocationLatitude;</span>
-<span class="nc" id="L62">    }</span>
-
-    public double getUserLocationLongitude() {
-<span class="nc" id="L65">        return userLocationLongitude;</span>
-    }
-
-    public void setUserLocationLongitude(double userLocationLongitude) {
-<span class="nc" id="L69">        this.userLocationLongitude = userLocationLongitude;</span>
-<span class="nc" id="L70">    }</span>
+    public void setUserLocation(Location userLocation) {
+<span class="nc" id="L63">        this.userLocation = userLocation;</span>
+<span class="nc" id="L64">    }</span>
 
     public double getDistance() {
-<span class="nc" id="L73">        return distance;</span>
+<span class="nc" id="L67">        return distance;</span>
     }
 
     public void setDistance(double distance) {
-<span class="nc" id="L77">        this.distance = distance;</span>
-<span class="nc" id="L78">    }</span>
+<span class="nc" id="L71">        this.distance = distance;</span>
+<span class="nc" id="L72">    }</span>
 
     public int getRewardPoints() {
-<span class="nc" id="L81">        return rewardPoints;</span>
+<span class="nc" id="L75">        return rewardPoints;</span>
     }
 
     public void setRewardPoints(int rewardPoints) {
-<span class="nc" id="L85">        this.rewardPoints = rewardPoints;</span>
-<span class="nc" id="L86">    }</span>
+<span class="nc" id="L79">        this.rewardPoints = rewardPoints;</span>
+<span class="nc" id="L80">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

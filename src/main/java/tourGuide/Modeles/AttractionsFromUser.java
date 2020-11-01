@@ -1,5 +1,7 @@
 package tourGuide.Modeles;
 
+import Modeles.Location;
+
 public class AttractionsFromUser {
 
     //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
@@ -14,17 +16,17 @@ public class AttractionsFromUser {
     private String attractionName;
     private double attractionLatitude;
     private double attractionLongitude;
-    private double userLocationLatitude;
-    private double userLocationLongitude;
+/*    private double userLocationLatitude;
+    private double userLocationLongitude;*/
+    private Location userLocation;
     private double distance;
     private int rewardPoints;
 
-    public AttractionsFromUser(String attractionName, double attractionLatitude, double attractionLongitude, double userLocationLatitude, double userLocationLongitude, double distance, int rewardPoints) {
+    public AttractionsFromUser(String attractionName, double attractionLatitude, double attractionLongitude, Location userLocation, double distance, int rewardPoints) {
         this.attractionName = attractionName;
         this.attractionLatitude = attractionLatitude;
         this.attractionLongitude = attractionLongitude;
-        this.userLocationLatitude = userLocationLatitude;
-        this.userLocationLongitude = userLocationLongitude;
+        this.userLocation = userLocation;
         this.distance = distance;
         this.rewardPoints = rewardPoints;
     }
@@ -53,20 +55,12 @@ public class AttractionsFromUser {
         this.attractionLongitude = attractionLongitude;
     }
 
-    public double getUserLocationLatitude() {
-        return userLocationLatitude;
+    public Location getUserLocation() {
+        return userLocation;
     }
 
-    public void setUserLocationLatitude(double userLocationLatitude) {
-        this.userLocationLatitude = userLocationLatitude;
-    }
-
-    public double getUserLocationLongitude() {
-        return userLocationLongitude;
-    }
-
-    public void setUserLocationLongitude(double userLocationLongitude) {
-        this.userLocationLongitude = userLocationLongitude;
+    public void setUserLocation(Location userLocation) {
+        this.userLocation = userLocation;
     }
 
     public double getDistance() {

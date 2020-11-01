@@ -8,8 +8,6 @@ import Modeles.Attraction;
 import Modeles.Location;
 import Modeles.VisitedLocation;
 import org.springframework.stereotype.Service;
-
-import rewardCentral.RewardCentral;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
@@ -22,7 +20,7 @@ public class RewardsService {
 	private int proximityBuffer = defaultProximityBuffer;
 	private int attractionProximityRange = 20000;
 	private final tourGuide.service.GpsUtil gpsUtil;
-	private final RewardCentral rewardsCentral;
+    private final tourGuide.service.RewardCentral rewardsCentral;
 
 	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardsCentral) {
 		this.gpsUtil = gpsUtil;
@@ -72,7 +70,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.getLocation()) < proximityBuffer;
 	}
 	
-	private int getRewardPoints(Attraction attraction, User user) {
+	int getRewardPoints(Attraction attraction, User user) throws IOException {
 		return rewardsCentral.getAttractionRewardPoints(attraction.getAttractionId(), user.getUserId());
 	}
 	

@@ -12,6 +12,7 @@ import com.jsoniter.output.JsonStream;
 import org.springframework.web.client.RestTemplate;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
+import tourGuide.user.UserLocation;
 import tripPricer.Provider;
 
 
@@ -36,7 +37,7 @@ public class TourGuideController {
         return JsonStream.serialize(visitedLocation.location);
     }
 
-    //  TODO: Change this method to no longer return a List of Attractions.
+    //  TODO: Change this method to no longer return a List of Attractions. : Done
     //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
     //  Return a new JSON object that contains:
     // Name of Tourist attraction,
@@ -45,10 +46,17 @@ public class TourGuideController {
     // The distance in miles between the user's location and each of the attractions.
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
+
     @RequestMapping("/getNearbyAttractions")
     public String getNearbyAttractions(@RequestParam String userName) throws IOException {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));
+        return JsonStream.serialize(tourGuideService.getFiveAttrations(visitedLocation, getUser(userName)));
+
+
+/*    @RequestMapping("/getNearbyAttractions")
+    public String getNearbyAttractions(@RequestParam String userName) throws IOException {
+        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
+        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));*/
     }
 
     @RequestMapping("/getRewards")
@@ -57,8 +65,8 @@ public class TourGuideController {
     }
 
     @RequestMapping("/getAllCurrentLocations")
-    public String getAllCurrentLocations() {
-        // TODO: Get a list of every user's most recent location as JSON
+    public List<UserLocation> getAllCurrentLocations() {
+        // TODO: Get a list of every user's most recent location as JSON : Done
         //- Note: does not use gpsUtil to query for their current location,
         //        but rather gathers the user's current location from their stored location history.
         //
@@ -68,7 +76,9 @@ public class TourGuideController {
         //        ...
         //     }
 
-        return JsonStream.serialize("");
+/*        List<UserLocation> result = tourGuideService.getUserLocation();
+        return JsonStream.serialize(result);*/
+        return tourGuideService.getUserLocation();
     }
 
     @RequestMapping("/getTripDeals")

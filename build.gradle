@@ -38,7 +38,7 @@ dependencies {
 //    compile group: 'projet8.SharedObjects2', name: 'SharedObjects2-1.0', version: '1.0'
 
 //    compile(name: 'gpsUtil', ext: 'jar')
-    compile(name: 'RewardCentral', ext: 'jar')
+//    compile(name: 'RewardCentral', ext: 'jar')
     compile(name: 'TripPricer', ext: 'jar')
     compile(name: 'SharedObjects2-1.0', ext: 'jar')
 
