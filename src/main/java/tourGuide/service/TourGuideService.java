@@ -6,6 +6,7 @@ import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -33,6 +34,7 @@ public class TourGuideService {
 	private final TripPricerService tripPricer;
 	public final Tracker tracker;
 	boolean testMode = true;
+	ExecutorService executorService = Executors.newFixedThreadPool(10000);
 
 
 
@@ -85,17 +87,24 @@ public class TourGuideService {
 	}
 
 	public void AsynchroneTrackUserLocation(User user) throws IOException {
-		ExecutorService executorService = Executors.newFixedThreadPool(32);
 
-				executorService.submit(() -> {
-					try {
-						trackUserLocation(user);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				});
+		Runnable runnableTask = () -> {
+			try {
+				trackUserLocation(user);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		};
+		executorService.execute(runnableTask);
 		}
 
+
+		public void AsynchroneFinaliseExecutor() throws InterruptedException {
+
+			executorService.shutdownNow();
+			executorService.awaitTermination(60, TimeUnit.SECONDS);
+
+		}
 
 
 
