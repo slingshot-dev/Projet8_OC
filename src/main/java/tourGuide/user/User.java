@@ -17,10 +17,10 @@ public class User {
 	private String emailAddress;
 	private Date latestLocationTimestamp;
 	private List<VisitedLocation> visitedLocations = new ArrayList<>();
-//	private List<UserReward> userRewards = new ArrayList<>();
+	private List<UserReward> userRewards = new ArrayList<>();
 	private UserPreferences userPreferences = new UserPreferences();
 	private List<Provider> tripDeals = new ArrayList<>();
-	private final CopyOnWriteArrayList<UserReward> userRewards = new CopyOnWriteArrayList<>();
+//	private final CopyOnWriteArrayList<UserReward> userRewards = new CopyOnWriteArrayList<>();
 
 	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
 		this.userId = userId;
@@ -99,10 +99,12 @@ public class User {
 		return tripDeals;
 	}
 
-	public CopyOnWriteArrayList<UserReward> getUserRewards() {
+//	public CopyOnWriteArrayList<UserReward> getUserRewards() {
+//		return userRewards;
+//	}
+
+
+	public List<UserReward> getUserRewards() {
 		return userRewards;
 	}
-
-
-
 }

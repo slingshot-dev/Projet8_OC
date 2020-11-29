@@ -27,31 +27,31 @@ import tourGuide.user.UserReward;
 
 @Service
 public class TourGuideService {
-<span class="fc" id="L30">	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);</span>
+<span class="nc" id="L30">	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);</span>
 	private final GpsUtil gpsUtil;
 	private final RewardsService rewardsService;
 //	private final TripPricer tripPricer = new TripPricer();
 	private final TripPricerService tripPricer;
 	public final Tracker tracker;
-<span class="fc" id="L36">	boolean testMode = true;</span>
-<span class="fc" id="L37">	ExecutorService executorService = Executors.newFixedThreadPool(10000);</span>
+<span class="nc" id="L36">	boolean testMode = true;</span>
+<span class="nc" id="L37">	ExecutorService executorService = Executors.newFixedThreadPool(10000);</span>
 
 
 
-<span class="fc" id="L41">	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService, TripPricerService tripPricer) {</span>
-<span class="fc" id="L42">		this.gpsUtil = gpsUtil;</span>
-<span class="fc" id="L43">		this.rewardsService = rewardsService;</span>
-<span class="fc" id="L44">		this.tripPricer = tripPricer;</span>
+<span class="nc" id="L41">	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService, TripPricerService tripPricer) {</span>
+<span class="nc" id="L42">		this.gpsUtil = gpsUtil;</span>
+<span class="nc" id="L43">		this.rewardsService = rewardsService;</span>
+<span class="nc" id="L44">		this.tripPricer = tripPricer;</span>
 
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">		if(testMode) {</span>
-<span class="fc" id="L47">			logger.info(&quot;TestMode enabled&quot;);</span>
-<span class="fc" id="L48">			logger.debug(&quot;Initializing users&quot;);</span>
-<span class="fc" id="L49">			initializeInternalUsers();</span>
-<span class="fc" id="L50">			logger.debug(&quot;Finished initializing users&quot;);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		if(testMode) {</span>
+<span class="nc" id="L47">			logger.info(&quot;TestMode enabled&quot;);</span>
+<span class="nc" id="L48">			logger.debug(&quot;Initializing users&quot;);</span>
+<span class="nc" id="L49">			initializeInternalUsers();</span>
+<span class="nc" id="L50">			logger.debug(&quot;Finished initializing users&quot;);</span>
 		}
-<span class="fc" id="L52">		tracker = new Tracker(this);</span>
-<span class="fc" id="L53">		addShutDownHook();</span>
-<span class="fc" id="L54">	}</span>
+<span class="nc" id="L52">		tracker = new Tracker(this);</span>
+<span class="nc" id="L53">		addShutDownHook();</span>
+<span class="nc" id="L54">	}</span>
 	
 	public List&lt;UserReward&gt; getUserRewards(User user) {
 <span class="nc" id="L57">		return user.getUserRewards();</span>
@@ -69,7 +69,7 @@ public class TourGuideService {
 	}
 	
 	public List&lt;User&gt; getAllUsers() {
-<span class="fc" id="L72">		return internalUserMap.values().stream().collect(Collectors.toList());</span>
+<span class="nc" id="L72">		return internalUserMap.values().stream().collect(Collectors.toList());</span>
 	}
 	
 	public void addUser(User user) {
@@ -88,23 +88,23 @@ public class TourGuideService {
 
 	public void AsynchroneTrackUserLocation(User user) throws IOException {
 
-<span class="fc" id="L91">		Runnable runnableTask = () -&gt; {</span>
+<span class="nc" id="L91">		Runnable runnableTask = () -&gt; {</span>
 			try {
-<span class="fc" id="L93">				trackUserLocation(user);</span>
+<span class="nc" id="L93">				trackUserLocation(user);</span>
 <span class="nc" id="L94">			} catch (IOException e) {</span>
 <span class="nc" id="L95">				e.printStackTrace();</span>
-<span class="fc" id="L96">			}</span>
-<span class="fc" id="L97">		};</span>
-<span class="fc" id="L98">		executorService.execute(runnableTask);</span>
-<span class="fc" id="L99">		}</span>
+<span class="nc" id="L96">			}</span>
+<span class="nc" id="L97">		};</span>
+<span class="nc" id="L98">		executorService.execute(runnableTask);</span>
+<span class="nc" id="L99">		}</span>
 
 
 		public void AsynchroneFinaliseExecutor() throws InterruptedException {
 
-<span class="fc" id="L104">			executorService.shutdownNow();</span>
-<span class="fc" id="L105">			executorService.awaitTermination(60, TimeUnit.SECONDS);</span>
+<span class="nc" id="L104">			executorService.shutdownNow();</span>
+<span class="nc" id="L105">			executorService.awaitTermination(60, TimeUnit.SECONDS);</span>
 
-<span class="fc" id="L107">		}</span>
+<span class="nc" id="L107">		}</span>
 
 
 
@@ -115,19 +115,19 @@ public class TourGuideService {
 
 		executorService.submit(() -&gt; {
 			try {*/
-<span class="fc" id="L118">				System.out.println(&quot;debut tache &quot; + Thread.currentThread().getName());</span>
+<span class="nc" id="L118">				System.out.println(&quot;debut tache &quot; + Thread.currentThread().getName());</span>
 
-<span class="fc" id="L120">				logger.debug(&quot;start get User Location&quot;);</span>
-<span class="fc" id="L121">				VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());</span>
-<span class="fc" id="L122">				logger.debug(&quot;Add Visited Location&quot;);</span>
-<span class="fc" id="L123">				user.addToVisitedLocations(visitedLocation);</span>
-<span class="fc" id="L124">				logger.debug(&quot;Calculate Rewards&quot;);</span>
-<span class="fc" id="L125">				rewardsService.calculateRewards(user);</span>
+<span class="nc" id="L120">				logger.debug(&quot;start get User Location&quot;);</span>
+<span class="nc" id="L121">				VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());</span>
+<span class="nc" id="L122">				logger.debug(&quot;Add Visited Location&quot;);</span>
+<span class="nc" id="L123">				user.addToVisitedLocations(visitedLocation);</span>
+<span class="nc" id="L124">				logger.debug(&quot;Calculate Rewards&quot;);</span>
+<span class="nc" id="L125">				rewardsService.calculateRewards(user);</span>
 /*			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});*/
-<span class="fc" id="L130">		return visitedLocation;</span>
+<span class="nc" id="L130">		return visitedLocation;</span>
 	}
 
 		public List&lt;Attraction&gt; getNearByAttractions(VisitedLocation visitedLocation) throws IOException {
@@ -184,12 +184,12 @@ public class TourGuideService {
 
 	
 	private void addShutDownHook() {
-<span class="fc" id="L187">		Runtime.getRuntime().addShutdownHook(new Thread() { </span>
+<span class="nc" id="L187">		Runtime.getRuntime().addShutdownHook(new Thread() { </span>
 		      public void run() {
-<span class="fc" id="L189">		        tracker.stopTracking();</span>
-<span class="fc" id="L190">		      } </span>
+<span class="nc" id="L189">		        tracker.stopTracking();</span>
+<span class="nc" id="L190">		      } </span>
 		    }); 
-<span class="fc" id="L192">	}</span>
+<span class="nc" id="L192">	}</span>
 	
 	/**********************************************************************************
 	 * 
@@ -198,41 +198,41 @@ public class TourGuideService {
 	 **********************************************************************************/
 	private static final String tripPricerApiKey = &quot;test-server-api-key&quot;;
 	// Database connection will be used for external users, but for testing purposes internal users are provided and stored in memory
-<span class="fc" id="L201">	private final Map&lt;String, User&gt; internalUserMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L201">	private final Map&lt;String, User&gt; internalUserMap = new HashMap&lt;&gt;();</span>
 	private void initializeInternalUsers() {
-<span class="fc" id="L203">		IntStream.range(0, InternalTestHelper.getInternalUserNumber()).forEach(i -&gt; {</span>
-<span class="fc" id="L204">			String userName = &quot;internalUser&quot; + i;</span>
-<span class="fc" id="L205">			String phone = &quot;000&quot;;</span>
-<span class="fc" id="L206">			String email = userName + &quot;@tourGuide.com&quot;;</span>
-<span class="fc" id="L207">			User user = new User(UUID.randomUUID(), userName, phone, email);</span>
-<span class="fc" id="L208">			generateUserLocationHistory(user);</span>
+<span class="nc" id="L203">		IntStream.range(0, InternalTestHelper.getInternalUserNumber()).forEach(i -&gt; {</span>
+<span class="nc" id="L204">			String userName = &quot;internalUser&quot; + i;</span>
+<span class="nc" id="L205">			String phone = &quot;000&quot;;</span>
+<span class="nc" id="L206">			String email = userName + &quot;@tourGuide.com&quot;;</span>
+<span class="nc" id="L207">			User user = new User(UUID.randomUUID(), userName, phone, email);</span>
+<span class="nc" id="L208">			generateUserLocationHistory(user);</span>
 			
-<span class="fc" id="L210">			internalUserMap.put(userName, user);</span>
-<span class="fc" id="L211">		});</span>
-<span class="fc" id="L212">		logger.debug(&quot;Created &quot; + InternalTestHelper.getInternalUserNumber() + &quot; internal test users.&quot;);</span>
-<span class="fc" id="L213">	}</span>
+<span class="nc" id="L210">			internalUserMap.put(userName, user);</span>
+<span class="nc" id="L211">		});</span>
+<span class="nc" id="L212">		logger.debug(&quot;Created &quot; + InternalTestHelper.getInternalUserNumber() + &quot; internal test users.&quot;);</span>
+<span class="nc" id="L213">	}</span>
 	
 	private void generateUserLocationHistory(User user) {
-<span class="fc" id="L216">		IntStream.range(0, 3).forEach(i-&gt; {</span>
-<span class="fc" id="L217">			user.addToVisitedLocations(new VisitedLocation(user.getUserId(), new Location(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));</span>
-<span class="fc" id="L218">		});</span>
-<span class="fc" id="L219">	}</span>
+<span class="nc" id="L216">		IntStream.range(0, 3).forEach(i-&gt; {</span>
+<span class="nc" id="L217">			user.addToVisitedLocations(new VisitedLocation(user.getUserId(), new Location(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));</span>
+<span class="nc" id="L218">		});</span>
+<span class="nc" id="L219">	}</span>
 	
 	private double generateRandomLongitude() {
-<span class="fc" id="L222">		double leftLimit = -180;</span>
-<span class="fc" id="L223">	    double rightLimit = 180;</span>
-<span class="fc" id="L224">	    return leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);</span>
+<span class="nc" id="L222">		double leftLimit = -180;</span>
+<span class="nc" id="L223">	    double rightLimit = 180;</span>
+<span class="nc" id="L224">	    return leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);</span>
 	}
 	
 	private double generateRandomLatitude() {
-<span class="fc" id="L228">		double leftLimit = -85.05112878;</span>
-<span class="fc" id="L229">	    double rightLimit = 85.05112878;</span>
-<span class="fc" id="L230">	    return leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);</span>
+<span class="nc" id="L228">		double leftLimit = -85.05112878;</span>
+<span class="nc" id="L229">	    double rightLimit = 85.05112878;</span>
+<span class="nc" id="L230">	    return leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);</span>
 	}
 	
 	private Date getRandomTime() {
-<span class="fc" id="L234">		LocalDateTime localDateTime = LocalDateTime.now().minusDays(new Random().nextInt(30));</span>
-<span class="fc" id="L235">	    return Date.from(localDateTime.toInstant(ZoneOffset.UTC));</span>
+<span class="nc" id="L234">		LocalDateTime localDateTime = LocalDateTime.now().minusDays(new Random().nextInt(30));</span>
+<span class="nc" id="L235">	    return Date.from(localDateTime.toInstant(ZoneOffset.UTC));</span>
 	}
 	
 }
