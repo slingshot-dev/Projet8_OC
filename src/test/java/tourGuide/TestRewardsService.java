@@ -4,10 +4,7 @@ import Modeles.Attraction;
 import Modeles.VisitedLocation;
 import org.junit.Test;
 import tourGuide.helper.InternalTestHelper;
-import tourGuide.service.GpsUtil;
-import tourGuide.service.RewardCentral;
-import tourGuide.service.RewardsService;
-import tourGuide.service.TourGuideService;
+import tourGuide.service.*;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
@@ -27,10 +24,11 @@ public class TestRewardsService {
 		Locale.setDefault(Locale.US);
 
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		Attraction attraction = gpsUtil.getAttractions().get(0);
@@ -53,11 +51,12 @@ public class TestRewardsService {
 	@Test
 	public void nearAllAttractions() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
 		InternalTestHelper.setInternalUserNumber(1);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 
 
 		rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));

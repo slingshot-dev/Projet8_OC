@@ -15,15 +15,15 @@ import java.util.UUID;
 
     public int getAttractionRewardPoints(UUID attractionId, UUID userId) throws IOException {
 
-<span class="fc" id="L18">        RestTemplate restTemplate = new RestTemplate();</span>
-<span class="fc" id="L19">        String ResourceUrl = &quot;http://localhost:8070/getAttractionRewardPoints&quot;;</span>
-<span class="fc" id="L20">        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ResourceUrl)</span>
-<span class="fc" id="L21">                .queryParam(&quot;attractionId&quot;, attractionId)</span>
-<span class="fc" id="L22">                .queryParam(&quot;userId&quot;, userId);</span>
+<span class="nc" id="L18">        RestTemplate restTemplate = new RestTemplate();</span>
+<span class="nc" id="L19">        String ResourceUrl = &quot;http://localhost:8070/getAttractionRewardPoints&quot;;</span>
+<span class="nc" id="L20">        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ResourceUrl)</span>
+<span class="nc" id="L21">                .queryParam(&quot;attractionId&quot;, attractionId)</span>
+<span class="nc" id="L22">                .queryParam(&quot;userId&quot;, userId);</span>
 
-<span class="fc" id="L24">        ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(builder.toUriString(), String.class);</span>
-<span class="fc" id="L25">        ObjectMapper objectMapper = new ObjectMapper();</span>
-<span class="fc" id="L26">        return objectMapper.readValue(response.getBody(), new TypeReference&lt;Integer&gt;(){});</span>
+<span class="nc" id="L24">        ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(builder.toUriString(), String.class);</span>
+<span class="nc" id="L25">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L26">        return objectMapper.readValue(response.getBody(), new TypeReference&lt;Integer&gt;(){});</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

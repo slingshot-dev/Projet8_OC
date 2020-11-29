@@ -3,6 +3,7 @@
 import java.io.IOException;
 import java.util.List;
 
+import Modeles.Provider;
 import Modeles.VisitedLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.jsoniter.output.JsonStream;
 import org.springframework.web.client.RestTemplate;
-import tourGuide.Modeles.AttractionsFromUser;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tourGuide.user.UserLocation;
-import tripPricer.Provider;
+
 
 
 @RestController
@@ -52,22 +52,16 @@ import tripPricer.Provider;
     public String getNearbyAttractions(@RequestParam String userName) throws IOException {
 <span class="nc" id="L53">        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
 <span class="nc" id="L54">        return JsonStream.serialize(tourGuideService.getFiveAttrations(visitedLocation, getUser(userName)));</span>
-
-
-/*    @RequestMapping(&quot;/getNearbyAttractions&quot;)
-    public String getNearbyAttractions(@RequestParam String userName) throws IOException {
-        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));*/
     }
 
     @RequestMapping(&quot;/getRewards&quot;)
     public String getRewards(@RequestParam String userName) {
-<span class="nc" id="L65">        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
+<span class="nc" id="L59">        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
     }
 
     @RequestMapping(&quot;/getAllCurrentLocations&quot;)
-    public String getAllCurrentLocations() {
-        // TODO: Get a list of every user's most recent location as JSON
+    public List&lt;UserLocation&gt; getAllCurrentLocations() {
+        // TODO: Get a list of every user's most recent location as JSON : Done
         //- Note: does not use gpsUtil to query for their current location,
         //        but rather gathers the user's current location from their stored location history.
         //
@@ -77,31 +71,20 @@ import tripPricer.Provider;
         //        ...
         //     }
 
-<span class="nc" id="L80">        List&lt;UserLocation&gt; result = tourGuideService.getUserLocation();</span>
-<span class="nc" id="L81">        return JsonStream.serialize(result);</span>
+/*        List&lt;UserLocation&gt; result = tourGuideService.getUserLocation();
+        return JsonStream.serialize(result);*/
+<span class="nc" id="L76">        return tourGuideService.getUserLocation();</span>
     }
 
     @RequestMapping(&quot;/getTripDeals&quot;)
-    public String getTripDeals(@RequestParam String userName) {
-<span class="nc" id="L86">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
-<span class="nc" id="L87">        return JsonStream.serialize(providers);</span>
+    public String getTripDeals(@RequestParam String userName) throws IOException {
+<span class="nc" id="L81">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
+<span class="nc" id="L82">        return JsonStream.serialize(providers);</span>
     }
 
     private User getUser(String userName) {
-<span class="nc" id="L91">        return tourGuideService.getUser(userName);</span>
+<span class="nc" id="L86">        return tourGuideService.getUser(userName);</span>
     }
-
-
-/*    @RequestMapping(&quot;/test2&quot;)
-    public List&lt;Attractions&gt; test2() throws IOException {
-
-        RestTemplate restTemplate = new RestTemplate();
-        String ResourceUrl = &quot;http://localhost:8080/getAttractions&quot;;
-        ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(ResourceUrl, String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(response.getBody(), new TypeReference&lt;List&lt;Attractions&gt;&gt;(){});
-    }*/
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

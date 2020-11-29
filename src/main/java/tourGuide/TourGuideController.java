@@ -3,6 +3,7 @@ package tourGuide;
 import java.io.IOException;
 import java.util.List;
 
+import Modeles.Provider;
 import Modeles.VisitedLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tourGuide.user.UserLocation;
-import tripPricer.Provider;
+
 
 
 @RestController
@@ -51,12 +52,6 @@ public class TourGuideController {
     public String getNearbyAttractions(@RequestParam String userName) throws IOException {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
         return JsonStream.serialize(tourGuideService.getFiveAttrations(visitedLocation, getUser(userName)));
-
-
-/*    @RequestMapping("/getNearbyAttractions")
-    public String getNearbyAttractions(@RequestParam String userName) throws IOException {
-        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));*/
     }
 
     @RequestMapping("/getRewards")
@@ -82,7 +77,7 @@ public class TourGuideController {
     }
 
     @RequestMapping("/getTripDeals")
-    public String getTripDeals(@RequestParam String userName) {
+    public String getTripDeals(@RequestParam String userName) throws IOException {
         List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
         return JsonStream.serialize(providers);
     }
@@ -90,17 +85,5 @@ public class TourGuideController {
     private User getUser(String userName) {
         return tourGuideService.getUser(userName);
     }
-
-
-/*    @RequestMapping("/test2")
-    public List<Attractions> test2() throws IOException {
-
-        RestTemplate restTemplate = new RestTemplate();
-        String ResourceUrl = "http://localhost:8080/getAttractions";
-        ResponseEntity<String> response = restTemplate.getForEntity(ResourceUrl, String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(response.getBody(), new TypeReference<List<Attractions>>(){});
-    }*/
-
 
 }

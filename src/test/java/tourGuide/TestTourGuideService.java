@@ -1,16 +1,13 @@
 package tourGuide;
 
 import Modeles.Attraction;
+import Modeles.Provider;
 import Modeles.VisitedLocation;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import tourGuide.helper.InternalTestHelper;
-import tourGuide.service.GpsUtil;
-import tourGuide.service.RewardCentral;
-import tourGuide.service.RewardsService;
-import tourGuide.service.TourGuideService;
+import tourGuide.service.*;
 import tourGuide.user.User;
-import tripPricer.Provider;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -22,14 +19,16 @@ import static org.junit.Assert.assertTrue;
 public class TestTourGuideService {
 
 
+
 	@Test
 	public void getUserLocation() throws IOException {
 		Locale.setDefault(Locale.US);
 
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
@@ -40,9 +39,10 @@ public class TestTourGuideService {
 	@Test
 	public void addUser() {
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
@@ -62,9 +62,10 @@ public class TestTourGuideService {
 	@Test
 	public void getAllUsers() {
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
@@ -83,9 +84,10 @@ public class TestTourGuideService {
 	@Test
 	public void trackUser() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
@@ -99,10 +101,11 @@ public class TestTourGuideService {
 	@Test
 	public void getNearbyAttractions() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		rewardsService.setAttractionProximityRange(Integer.MAX_VALUE);
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
@@ -115,11 +118,12 @@ public class TestTourGuideService {
 	}
 
 	@Test
-	public void getTripDeals() {
+	public void getTripDeals() throws IOException {
 		GpsUtil gpsUtil = new GpsUtil();
+		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 

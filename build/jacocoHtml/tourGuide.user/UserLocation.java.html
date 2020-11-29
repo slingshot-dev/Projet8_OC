@@ -8,9 +8,9 @@ import java.util.UUID;
 public class UserLocation {
 
     private UUID userUuid;
-    private List&lt;Location&gt; userLoc;
+    private Location userLoc;
 
-<span class="nc" id="L13">    public UserLocation(UUID userUuid, List&lt;Location&gt; userLoc) {</span>
+<span class="nc" id="L13">    public UserLocation(UUID userUuid, Location userLoc) {</span>
 <span class="nc" id="L14">        this.userUuid = userUuid;</span>
 <span class="nc" id="L15">        this.userLoc = userLoc;</span>
 <span class="nc" id="L16">    }</span>
@@ -23,11 +23,11 @@ public class UserLocation {
 <span class="nc" id="L23">        this.userUuid = userUuid;</span>
 <span class="nc" id="L24">    }</span>
 
-    public List&lt;Location&gt; getUserLoc() {
+    public Location getUserLoc() {
 <span class="nc" id="L27">        return userLoc;</span>
     }
 
-    public void setUserLoc(List&lt;Location&gt; userLoc) {
+    public void setUserLoc(Location userLoc) {
 <span class="nc" id="L31">        this.userLoc = userLoc;</span>
 <span class="nc" id="L32">    }</span>
 }

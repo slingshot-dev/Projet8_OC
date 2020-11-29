@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import Modeles.Provider;
 import Modeles.VisitedLocation;
-import tripPricer.Provider;
+
 
 public class User {
 	private final UUID userId;
@@ -15,16 +17,18 @@ public class User {
 	private String emailAddress;
 	private Date latestLocationTimestamp;
 	private List<VisitedLocation> visitedLocations = new ArrayList<>();
-	private List<UserReward> userRewards = new ArrayList<>();
+//	private List<UserReward> userRewards = new ArrayList<>();
 	private UserPreferences userPreferences = new UserPreferences();
 	private List<Provider> tripDeals = new ArrayList<>();
+	private final CopyOnWriteArrayList<UserReward> userRewards = new CopyOnWriteArrayList<>();
+
 	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
 		this.userId = userId;
 		this.userName = userName;
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 	}
-	
+
 	public UUID getUserId() {
 		return userId;
 	}
@@ -74,11 +78,7 @@ public class User {
 			userRewards.add(userReward);
 		}
 	}
-	
-	public List<UserReward> getUserRewards() {
-		return userRewards;
-	}
-	
+
 	public UserPreferences getUserPreferences() {
 		return userPreferences;
 	}
@@ -98,5 +98,11 @@ public class User {
 	public List<Provider> getTripDeals() {
 		return tripDeals;
 	}
+
+	public CopyOnWriteArrayList<UserReward> getUserRewards() {
+		return userRewards;
+	}
+
+
 
 }

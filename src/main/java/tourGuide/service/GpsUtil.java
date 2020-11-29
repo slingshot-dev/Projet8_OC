@@ -4,10 +4,13 @@ import Modeles.Attraction;
 import Modeles.VisitedLocation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import tourGuide.tracker.Tracker;
 
 
 import java.io.IOException;
@@ -16,6 +19,9 @@ import java.util.UUID;
 
 @Service
 public class GpsUtil {
+
+    private Logger logger = LoggerFactory.getLogger(GpsUtil.class);
+
 
     public List<Attraction> getAttractions() throws IOException {
 
@@ -32,6 +38,8 @@ public class GpsUtil {
                 .queryParam("userId", userId);
 
         RestTemplate restTemplate = new RestTemplate();
+
+        logger.debug("test");
 
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
         ObjectMapper objectMapper = new ObjectMapper();

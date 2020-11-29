@@ -4,15 +4,17 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import Modeles.Attraction;
 import Modeles.Location;
+import Modeles.Provider;
 import Modeles.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tourGuide.Modeles.AttractionsFromUser;
 import tourGuide.helper.InternalTestHelper;
@@ -20,8 +22,6 @@ import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserLocation;
 import tourGuide.user.UserReward;
-import tripPricer.Provider;
-import tripPricer.TripPricer;
 
 
 @Service
@@ -29,15 +29,18 @@ public class TourGuideService {
 	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
 	private final GpsUtil gpsUtil;
 	private final RewardsService rewardsService;
-	private final TripPricer tripPricer = new TripPricer();
+//	private final TripPricer tripPricer = new TripPricer();
+	private final TripPricerService tripPricer;
 	public final Tracker tracker;
 	boolean testMode = true;
 
 
-	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
+
+	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService, TripPricerService tripPricer) {
 		this.gpsUtil = gpsUtil;
 		this.rewardsService = rewardsService;
-		
+		this.tripPricer = tripPricer;
+
 		if(testMode) {
 			logger.info("TestMode enabled");
 			logger.debug("Initializing users");
@@ -73,25 +76,52 @@ public class TourGuideService {
 		}
 	}
 	
-	public List<Provider> getTripDeals(User user) {
+	public List<Provider> getTripDeals(User user) throws IOException {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), 
+		List <Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
 				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
 		user.setTripDeals(providers);
 		return providers;
 	}
-	
+
+	public void AsynchroneTrackUserLocation(User user) throws IOException {
+		ExecutorService executorService = Executors.newFixedThreadPool(32);
+
+				executorService.submit(() -> {
+					try {
+						trackUserLocation(user);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				});
+		}
+
+
+
+
 	public VisitedLocation trackUserLocation(User user) throws IOException {
-		logger.debug("start get User Location");
-		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
-		logger.debug("Add Visited Location");
-		user.addToVisitedLocations(visitedLocation);
-		logger.debug("Calculate Rewards");
-		rewardsService.calculateRewards(user);
+
+/*		ExecutorService executorService = Executors.newFixedThreadPool(32);
+		VisitedLocation visitedLocation2 = new VisitedLocation();
+
+		executorService.submit(() -> {
+			try {*/
+				System.out.println("debut tache " + Thread.currentThread().getName());
+
+				logger.debug("start get User Location");
+				VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
+				logger.debug("Add Visited Location");
+				user.addToVisitedLocations(visitedLocation);
+				logger.debug("Calculate Rewards");
+				rewardsService.calculateRewards(user);
+/*			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});*/
 		return visitedLocation;
 	}
 
-	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) throws IOException {
+		public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) throws IOException {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 
 		for(Attraction attraction : gpsUtil.getAttractions()) {
@@ -130,14 +160,6 @@ public class TourGuideService {
 
 
 	public List<UserLocation> getUserLocation(){
-
-/*		List<UserLocation> userPosition = internalUserMap.values().stream()
-				.map(u -> new UserLocation(u.getUserId(),
-						u.getVisitedLocations().stream().
-								map(l -> new Location(l.location.latitude,l.location.longitude)).collect(Collectors.toList())))
-				.collect(Collectors.toList());
-
-		return userPosition;*/
 
 		List<UserLocation> userLocations = new ArrayList<>();
 		List<User> userList = getAllUsers();
