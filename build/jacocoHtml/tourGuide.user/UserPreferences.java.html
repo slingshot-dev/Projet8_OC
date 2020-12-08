@@ -8,18 +8,18 @@ import org.javamoney.moneta.Money;
 
 public class UserPreferences {
 	
-<span class="nc" id="L11">	private int attractionProximity = Integer.MAX_VALUE;</span>
-<span class="nc" id="L12">	private CurrencyUnit currency = Monetary.getCurrency(&quot;USD&quot;);</span>
-<span class="nc" id="L13">	private Money lowerPricePoint = Money.of(0, currency);</span>
-<span class="nc" id="L14">	private Money highPricePoint = Money.of(Integer.MAX_VALUE, currency);</span>
-<span class="nc" id="L15">	private int tripDuration = 1;</span>
-<span class="nc" id="L16">	private int ticketQuantity = 1;</span>
-<span class="nc" id="L17">	private int numberOfAdults = 1;</span>
-<span class="nc" id="L18">	private int numberOfChildren = 0;</span>
-<span class="nc" id="L19">	private int numberOfAttractions = 5;</span>
+<span class="fc" id="L11">	private int attractionProximity = Integer.MAX_VALUE;</span>
+<span class="fc" id="L12">	private CurrencyUnit currency = Monetary.getCurrency(&quot;USD&quot;);</span>
+<span class="fc" id="L13">	private Money lowerPricePoint = Money.of(0, currency);</span>
+<span class="fc" id="L14">	private Money highPricePoint = Money.of(Integer.MAX_VALUE, currency);</span>
+<span class="fc" id="L15">	private int tripDuration = 1;</span>
+<span class="fc" id="L16">	private int ticketQuantity = 1;</span>
+<span class="fc" id="L17">	private int numberOfAdults = 1;</span>
+<span class="fc" id="L18">	private int numberOfChildren = 0;</span>
+<span class="fc" id="L19">	private int numberOfAttractions = 5;</span>
 	
-<span class="nc" id="L21">	public UserPreferences() {</span>
-<span class="nc" id="L22">	}</span>
+<span class="fc" id="L21">	public UserPreferences() {</span>
+<span class="fc" id="L22">	}</span>
 	
 	public void setAttractionProximity(int attractionProximity) {
 <span class="nc" id="L25">		this.attractionProximity = attractionProximity;</span>
@@ -46,7 +46,7 @@ public class UserPreferences {
 <span class="nc" id="L46">	}</span>
 	
 	public int getTripDuration() {
-<span class="nc" id="L49">		return tripDuration;</span>
+<span class="fc" id="L49">		return tripDuration;</span>
 	}
 
 	public void setTripDuration(int tripDuration) {
@@ -62,7 +62,7 @@ public class UserPreferences {
 <span class="nc" id="L62">	}</span>
 	
 	public int getNumberOfAdults() {
-<span class="nc" id="L65">		return numberOfAdults;</span>
+<span class="fc" id="L65">		return numberOfAdults;</span>
 	}
 
 	public void setNumberOfAdults(int numberOfAdults) {
@@ -70,7 +70,7 @@ public class UserPreferences {
 <span class="nc" id="L70">	}</span>
 
 	public int getNumberOfChildren() {
-<span class="nc" id="L73">		return numberOfChildren;</span>
+<span class="fc" id="L73">		return numberOfChildren;</span>
 	}
 
 	public void setNumberOfChildren(int numberOfChildren) {

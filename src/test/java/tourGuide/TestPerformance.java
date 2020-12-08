@@ -7,9 +7,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tourGuide.controlers.GpsUtilController;
+import tourGuide.controlers.RewardCentralController;
+import tourGuide.controlers.TripPricerController;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.*;
-import tourGuide.user.User;
+import tourGuide.Modeles.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,12 +55,12 @@ public class TestPerformance {
 //		int nbProcs = Runtime.getRuntime().availableProcessors();
 
 		Locale.setDefault(Locale.US);
-		GpsUtil gpsUtil = new GpsUtil();
-		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
-		TripPricerService tripPricerService = new TripPricerService();
+		GpsUtilController gpsUtilController = new GpsUtilController();
+		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		TripPricerController tripPricerController = new TripPricerController();
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
 		InternalTestHelper.setInternalUserNumber(10000);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
 
 		List<User> allUsers = new ArrayList<>();
 		allUsers = tourGuideService.getAllUsers();
@@ -87,10 +90,10 @@ public class TestPerformance {
 
 	@Test
 	public void highVolumeGetRewards() throws IOException, InterruptedException {
-		GpsUtil gpsUtil = new GpsUtil();
-		TripPricerService tripPricerService = new TripPricerService();
-		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
+		GpsUtilController gpsUtilController = new GpsUtilController();
+		TripPricerController tripPricerController = new TripPricerController();
+		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
 		ExecutorService executorService = Executors.newFixedThreadPool(10000);
 
 		// Users incremented up to 100,000
@@ -99,7 +102,7 @@ public class TestPerformance {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 
-		Attraction attraction = gpsUtil.getAttractions().get(0);
+		Attraction attraction = gpsUtilController.getAttractions().get(0);
 		List<User> allUsers = new ArrayList<>();
 		allUsers = tourGuideService.getAllUsers();
 
@@ -136,6 +139,10 @@ public class TestPerformance {
 		System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
 		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
+		for (User user : allUsers) {
+			assertTrue(user.getUserRewards().size() > 0);
+		}
+
 	}
 
 
@@ -144,10 +151,10 @@ public class TestPerformance {
 	@Ignore
 	@Test
 	public void highVolumeGetRewardsCyG() throws InterruptedException, IOException {
-		GpsUtil gpsUtil = new GpsUtil();
-		TripPricerService tripPricerService = new TripPricerService();
-		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
+		GpsUtilController gpsUtilController = new GpsUtilController();
+		TripPricerController tripPricerController = new TripPricerController();
+		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
 		ExecutorService executorService = Executors.newFixedThreadPool(10000);
 
 		// Users incremented up to 100,000
@@ -156,7 +163,7 @@ public class TestPerformance {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 
-		Attraction attraction = gpsUtil.getAttractions().get(0);
+		Attraction attraction = gpsUtilController.getAttractions().get(0);
 		List<User> allUsers = new ArrayList<>();
 		allUsers = tourGuideService.getAllUsers();
 

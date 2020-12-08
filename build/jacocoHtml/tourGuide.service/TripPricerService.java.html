@@ -13,24 +13,24 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-<span class="nc" id="L16">public class TripPricerService {</span>
+<span class="fc" id="L16">public class TripPricerService {</span>
 
 
     public List&lt;Provider&gt; getPrice(String apiKey, UUID attractionId, int adults, int children, int nightsStay, int rewardsPoints) throws IOException {
-<span class="nc" id="L20">        String ResourceUrl = &quot;http://localhost:8060/getPrice&quot;;</span>
-<span class="nc" id="L21">        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ResourceUrl)</span>
-<span class="nc" id="L22">                .queryParam(&quot;apiKey&quot;, apiKey)</span>
-<span class="nc" id="L23">                .queryParam(&quot;attractionId&quot;, attractionId)</span>
-<span class="nc" id="L24">                .queryParam(&quot;adults&quot;, adults)</span>
-<span class="nc" id="L25">                .queryParam(&quot;children&quot;, children)</span>
-<span class="nc" id="L26">                .queryParam(&quot;nightsStay&quot;, nightsStay)</span>
-<span class="nc" id="L27">                .queryParam(&quot;rewardsPoints&quot;, rewardsPoints);</span>
+<span class="fc" id="L20">        String ResourceUrl = &quot;http://17.18.0.4:8060/getPrice&quot;;</span>
+<span class="fc" id="L21">        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ResourceUrl)</span>
+<span class="fc" id="L22">                .queryParam(&quot;apiKey&quot;, apiKey)</span>
+<span class="fc" id="L23">                .queryParam(&quot;attractionId&quot;, attractionId)</span>
+<span class="fc" id="L24">                .queryParam(&quot;adults&quot;, adults)</span>
+<span class="fc" id="L25">                .queryParam(&quot;children&quot;, children)</span>
+<span class="fc" id="L26">                .queryParam(&quot;nightsStay&quot;, nightsStay)</span>
+<span class="fc" id="L27">                .queryParam(&quot;rewardsPoints&quot;, rewardsPoints);</span>
 
-<span class="nc" id="L29">        RestTemplate restTemplate = new RestTemplate();</span>
+<span class="fc" id="L29">        RestTemplate restTemplate = new RestTemplate();</span>
 
-<span class="nc" id="L31">        ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(builder.toUriString(), String.class);</span>
-<span class="nc" id="L32">        ObjectMapper objectMapper = new ObjectMapper();</span>
-<span class="nc" id="L33">        return objectMapper.readValue(response.getBody(), new TypeReference&lt;List&lt;Provider&gt;&gt;(){});</span>
+<span class="fc" id="L31">        ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(builder.toUriString(), String.class);</span>
+<span class="fc" id="L32">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L33">        return objectMapper.readValue(response.getBody(), new TypeReference&lt;List&lt;Provider&gt;&gt;(){});</span>
     }
 
 }

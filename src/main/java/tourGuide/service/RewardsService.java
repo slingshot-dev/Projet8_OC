@@ -9,8 +9,10 @@ import Modeles.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import tourGuide.user.User;
-import tourGuide.user.UserReward;
+import tourGuide.controlers.GpsUtilController;
+import tourGuide.controlers.RewardCentralController;
+import tourGuide.Modeles.User;
+import tourGuide.Modeles.UserReward;
 
 
 @Service
@@ -22,12 +24,12 @@ public class RewardsService {
 	private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
 	private int attractionProximityRange = 20000;
-	private final tourGuide.service.GpsUtil gpsUtil;
-	private final tourGuide.service.RewardCentral rewardsCentral;
+	private final GpsUtilController gpsUtilController;
+	private final RewardCentralController rewardsCentral;
 
 
-	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardsCentral) {
-		this.gpsUtil = gpsUtil;
+	public RewardsService(GpsUtilController gpsUtilController, RewardCentralController rewardsCentral) {
+		this.gpsUtilController = gpsUtilController;
 		this.rewardsCentral = rewardsCentral;
 	}
 
@@ -46,11 +48,10 @@ public class RewardsService {
 
 
 	public void AsynchroneCalculateRewards(User user) throws IOException {
-
 		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
 		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>();
 
-		attractions.addAll(gpsUtil.getAttractions());
+		attractions.addAll(gpsUtilController.getAttractions());
 		userLocations.addAll(user.getVisitedLocations());
 
 		for(VisitedLocation visitedLocation : userLocations) {
@@ -74,7 +75,7 @@ public class RewardsService {
 	public synchronized void calculateRewards(User user) throws IOException {
 		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
 		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>();
-		attractions.addAll(gpsUtil.getAttractions());
+		attractions.addAll(gpsUtilController.getAttractions());
 		userLocations.addAll(user.getVisitedLocations());
 
 		for (VisitedLocation visitedLocation : userLocations) {

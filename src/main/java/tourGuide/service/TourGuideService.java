@@ -17,29 +17,28 @@ import Modeles.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import tourGuide.Modeles.AttractionsFromUser;
+import tourGuide.Modeles.*;
+import tourGuide.controlers.GpsUtilController;
+import tourGuide.controlers.TripPricerController;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
-import tourGuide.user.User;
-import tourGuide.user.UserLocation;
-import tourGuide.user.UserReward;
 
 
 @Service
 public class TourGuideService {
 	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-	private final GpsUtil gpsUtil;
+	private final GpsUtilController gpsUtilController;
 	private final RewardsService rewardsService;
 //	private final TripPricer tripPricer = new TripPricer();
-	private final TripPricerService tripPricer;
+	private final TripPricerController tripPricer;
 	public final Tracker tracker;
 	boolean testMode = true;
 	ExecutorService executorService = Executors.newFixedThreadPool(10000);
 
 
 
-	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService, TripPricerService tripPricer) {
-		this.gpsUtil = gpsUtil;
+	public TourGuideService(GpsUtilController gpsUtilController, RewardsService rewardsService, TripPricerController tripPricer) {
+		this.gpsUtilController = gpsUtilController;
 		this.rewardsService = rewardsService;
 		this.tripPricer = tripPricer;
 
@@ -110,30 +109,18 @@ public class TourGuideService {
 
 	public VisitedLocation trackUserLocation(User user) throws IOException {
 
-/*		ExecutorService executorService = Executors.newFixedThreadPool(32);
-		VisitedLocation visitedLocation2 = new VisitedLocation();
-
-		executorService.submit(() -> {
-			try {*/
 				System.out.println("debut tache " + Thread.currentThread().getName());
-
-				logger.debug("start get User Location");
-				VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
-				logger.debug("Add Visited Location");
+				VisitedLocation visitedLocation = gpsUtilController.getUserLocation(user.getUserId());
 				user.addToVisitedLocations(visitedLocation);
-				logger.debug("Calculate Rewards");
 				rewardsService.calculateRewards(user);
-/*			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		});*/
+
 		return visitedLocation;
 	}
 
 		public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) throws IOException {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 
-		for(Attraction attraction : gpsUtil.getAttractions()) {
+		for(Attraction attraction : gpsUtilController.getAttractions()) {
 			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
 				nearbyAttractions.add(attraction);
 			}
@@ -145,9 +132,8 @@ public class TourGuideService {
 
 	public List<AttractionsFromUser> getFiveAttrations(VisitedLocation visitedLocation, User user) throws IOException {
 
-		List<Attraction> attractions = gpsUtil.getAttractions();
-		List<AttractionsFromUser> allAttractions = attractions.parallelStream()
-				.map(a -> {
+		List<Attraction> attractions = gpsUtilController.getAttractions();
+		List<AttractionsFromUser> allAttractions = attractions.parallelStream().map(a -> {
 					try {
 						return new AttractionsFromUser(a.attractionName, a.latitude, a.longitude, visitedLocation.location,
 								rewardsService.getDistance(a, visitedLocation.location),
@@ -157,14 +143,10 @@ public class TourGuideService {
 					}
 					return null;
 				})
-				.sorted(Comparator.comparingDouble(AttractionsFromUser::getDistance))
+				.sorted(Comparator.comparingDouble(attractionsFromUser -> attractionsFromUser != null ? attractionsFromUser.getDistance() : 0))
 				.collect(Collectors.toList());
 
-		List<AttractionsFromUser> closestAttractions = allAttractions.stream().
-				limit(user.getUserPreferences().getNumberOfAttractions()).collect(Collectors.toList());
-
-		return closestAttractions;
-
+		return allAttractions.stream().limit(user.getUserPreferences().getNumberOfAttractions()).collect(Collectors.toList());
 	}
 
 
@@ -190,7 +172,10 @@ public class TourGuideService {
 		      } 
 		    }); 
 	}
-	
+
+
+
+
 	/**********************************************************************************
 	 * 
 	 * Methods Below: For Internal Testing

@@ -11,7 +11,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tourGuide.service.TourGuideService;
-import tourGuide.user.User;
+import tourGuide.Modeles.User;
 
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
