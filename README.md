@@ -8,7 +8,7 @@ L'application expose des URL via SpringBoot
 
 
 # spring-boot
-## Technical:
+## Technical
 
 1. Framework: Spring Boot v2.1.6
 2. Java 8
@@ -18,22 +18,28 @@ L'application expose des URL via SpringBoot
 
 ## Running App
 To generate application .jar, run the folowing command :
+
 gradle clean
+
 gradle fatJar
 
 In directory : /build/libs
+
 file : TourGuide-all-1.jar
 
 java -jar TourGuide-all-1.jar
 
 ## Testing
 To run the tests from Gradle, go to the folder that contains the build.gradle file and execute the below command.
+
 gradle test
 
 # Reporting
 To generate Test Report
+
 gradle jacocoTestCoverageVerification
 
 To generate jacoco Reports
+
 gradle jacocoTestReport
 
