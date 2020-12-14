@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import Modeles.Attraction;
 import Modeles.Location;
 import Modeles.Provider;
@@ -18,40 +17,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import tourGuide.Modeles.*;
-import tourGuide.controlers.GpsUtilController;
-import tourGuide.controlers.TripPricerController;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 
+/**
+ * Service permettant de :
+ * - Recuperer les 5 attractions les plus proches
+ * - Recuperer les Rewards de l'utilisateur
+ * - Recuperer les Localisations de l'utilisateur
+ * - Recuperer tous les utilisateurs
+ */
 
 @Service
 public class TourGuideService {
-	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-	private final GpsUtilController gpsUtilController;
+	private final Logger logger = LoggerFactory.getLogger(TourGuideService.class);
+	private final GpsUtilService gpsUtilService;
 	private final RewardsService rewardsService;
-//	private final TripPricer tripPricer = new TripPricer();
-/*	private final TripPricerController tripPricer;*/
 	public final Tracker tracker;
 	boolean testMode = true;
 	ExecutorService executorService = Executors.newFixedThreadPool(5000);
 
 
 	@Autowired
-	private TripPricerController tripPricer;
+	private final TripPricerService tripPricer;
 
-	public TourGuideService(GpsUtilController gpsUtilController, RewardsService rewardsService, TripPricerController tripPricer) {
-		this.gpsUtilController = gpsUtilController;
+	public TourGuideService(GpsUtilService gpsUtilService, RewardsService rewardsService, TripPricerService tripPricer) {
+		this.gpsUtilService = gpsUtilService;
 		this.rewardsService = rewardsService;
 		this.tripPricer = tripPricer;
-
-/*	public TourGuideService(GpsUtilController gpsUtilController, RewardsService rewardsService) {
-		this.gpsUtilController = gpsUtilController;
-		this.rewardsService = rewardsService;*/
-
 
 
 		if(testMode) {
@@ -69,10 +63,9 @@ public class TourGuideService {
 	}
 	
 	public VisitedLocation getUserLocation(User user) throws IOException {
-		VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
+		return (user.getVisitedLocations().size() > 0) ?
 			user.getLastVisitedLocation() :
 			trackUserLocation(user);
-		return visitedLocation;
 	}
 	
 	public User getUser(String userName) {
@@ -80,7 +73,7 @@ public class TourGuideService {
 	}
 	
 	public List<User> getAllUsers() {
-		return internalUserMap.values().stream().collect(Collectors.toList());
+		return new ArrayList<>(internalUserMap.values());
 	}
 	
 	public void addUser(User user) {
@@ -90,7 +83,7 @@ public class TourGuideService {
 	}
 	
 	public List<Provider> getTripDeals(User user) throws IOException {
-		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
+		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(UserReward::getRewardPoints).sum();
 		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
 				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
 		user.setTripDeals(providers);
@@ -110,50 +103,37 @@ public class TourGuideService {
 		}
 
 
-		public void asynchroneFinaliseExecutor() throws InterruptedException {
-
-			executorService.shutdown();
-/*			try {
-				if (!executorService.awaitTermination(20, TimeUnit.MINUTES)) {
-					executorService.shutdownNow();
-				}
-			} catch (InterruptedException e) {
-				executorService.shutdownNow();
-			}*/
-			executorService.awaitTermination(250, TimeUnit.SECONDS);
-
+	public void asynchroneFinaliseExecutor() throws InterruptedException {
+		executorService.shutdown();
+		executorService.awaitTermination(250, TimeUnit.SECONDS);
 		}
 
 
 
 	public VisitedLocation trackUserLocation(User user) throws IOException {
-
-//				System.out.println("debut tache " + Thread.currentThread().getName());
-				VisitedLocation visitedLocation = gpsUtilController.getUserLocation(user.getUserId());
+				VisitedLocation visitedLocation = gpsUtilService.getUserLocation(user.getUserId());
 				user.addToVisitedLocations(visitedLocation);
 				rewardsService.calculateRewards(user);
-
 		return visitedLocation;
 	}
 
 		public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) throws IOException {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 
-		for(Attraction attraction : gpsUtilController.getAttractions()) {
+		for(Attraction attraction : gpsUtilService.getAttractions()) {
 			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
 				nearbyAttractions.add(attraction);
 			}
 		}
-		
 		return nearbyAttractions;
 	}
 
 
 	public List<AttractionsFromUser> getFiveAttrations(VisitedLocation visitedLocation, User user) throws IOException {
 
-		gpsUtilController.getAttractions();
+		gpsUtilService.getAttractions();
 
-		List<Attraction> attractions = gpsUtilController.getAttractions();
+		List<Attraction> attractions = gpsUtilService.getAttractions();
 		List<AttractionsFromUser> allAttractions = attractions.parallelStream().map(a -> {
 					try {
 						return new AttractionsFromUser(a.attractionName, a.latitude, a.longitude, visitedLocation.location,

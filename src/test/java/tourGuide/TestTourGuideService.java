@@ -9,14 +9,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import tourGuide.Modeles.UserPreferences;
-import tourGuide.controlers.GpsUtilController;
-import tourGuide.controlers.RewardCentralController;
-import tourGuide.controlers.TripPricerController;
+import tourGuide.service.GpsUtilService;
+import tourGuide.service.RewardCentralService;
+import tourGuide.service.TripPricerService;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.*;
 import tourGuide.Modeles.User;
 
-import javax.money.Monetary;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -36,11 +35,11 @@ public class TestTourGuideService {
 	public void getUserLocation() throws IOException {
 		Locale.setDefault(Locale.US);
 
-		GpsUtilController gpsUtilController = new GpsUtilController();
-		TripPricerController tripPricerController = new TripPricerController();
-		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		GpsUtilService gpsUtilService = new GpsUtilService();
+		TripPricerService tripPricerService = new TripPricerService();
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 //		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -51,11 +50,11 @@ public class TestTourGuideService {
 	
 	@Test
 	public void addUser() {
-		GpsUtilController gpsUtilController = new GpsUtilController();
-		TripPricerController tripPricerController = new TripPricerController();
-		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		GpsUtilService gpsUtilService = new GpsUtilService();
+		TripPricerService tripPricerService = new TripPricerService();
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 //		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -75,11 +74,11 @@ public class TestTourGuideService {
 	
 	@Test
 	public void getAllUsers() {
-		GpsUtilController gpsUtilController = new GpsUtilController();
-		TripPricerController tripPricerController = new TripPricerController();
-		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		GpsUtilService gpsUtilService = new GpsUtilService();
+		TripPricerService tripPricerService = new TripPricerService();
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 //		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -98,11 +97,11 @@ public class TestTourGuideService {
 	
 	@Test
 	public void trackUser() throws IOException {
-		GpsUtilController gpsUtilController = new GpsUtilController();
-		TripPricerController tripPricerController = new TripPricerController();
-		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		GpsUtilService gpsUtilService = new GpsUtilService();
+		TripPricerService tripPricerService = new TripPricerService();
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 //		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -116,12 +115,12 @@ public class TestTourGuideService {
 	// Not yet implemented
 	@Test
 	public void getNearbyAttractions() throws IOException {
-		GpsUtilController gpsUtilController = new GpsUtilController();
-		TripPricerController tripPricerController = new TripPricerController();
-		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		GpsUtilService gpsUtilService = new GpsUtilService();
+		TripPricerService tripPricerService = new TripPricerService();
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
 		rewardsService.setAttractionProximityRange(Integer.MAX_VALUE);
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 //		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -136,11 +135,11 @@ public class TestTourGuideService {
 
 	@Test
 	public void getTripDeals() throws IOException {
-		GpsUtilController gpsUtilController = new GpsUtilController();
-		TripPricerController tripPricerController = new TripPricerController();
-		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
+		GpsUtilService gpsUtilService = new GpsUtilService();
+		TripPricerService tripPricerService = new TripPricerService();
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 //		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");

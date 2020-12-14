@@ -3,35 +3,39 @@ package tourGuide.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.*;
-
 import Modeles.Attraction;
 import Modeles.Location;
 import Modeles.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import tourGuide.controlers.GpsUtilController;
-import tourGuide.controlers.RewardCentralController;
 import tourGuide.Modeles.User;
 import tourGuide.Modeles.UserReward;
 
+/**
+ * Service permettant :
+ * - le calcul des rewards
+ * - Le calcul de distance
+ * - la verification ds attractions a procimité
+ * - le settings des parametres dez procimité
+ */
 
 @Service
 public class RewardsService {
 	private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
-	private Logger logger = LoggerFactory.getLogger(RewardsService.class);
+	private final Logger logger = LoggerFactory.getLogger(RewardsService.class);
 
 	// proximity in miles
 	private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
 	private int attractionProximityRange = 200;
-	private final GpsUtilController gpsUtilController;
-	private final RewardCentralController rewardsCentral;
+	private final GpsUtilService gpsUtilService;
+	private final RewardCentralService rewardsCentral;
 	private Integer nbAddReward = 0;
 
 
-	public RewardsService(GpsUtilController gpsUtilController, RewardCentralController rewardsCentral) {
-		this.gpsUtilController = gpsUtilController;
+	public RewardsService(GpsUtilService gpsUtilService, RewardCentralService rewardsCentral) {
+		this.gpsUtilService = gpsUtilService;
 		this.rewardsCentral = rewardsCentral;
 	}
 
@@ -54,7 +58,7 @@ public class RewardsService {
 
 			Runnable runnableTask = () -> {
 				try {
-					nonSynchCalculateRewards(user);
+					calculateRewards(user);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -69,12 +73,10 @@ public class RewardsService {
 		}
 
 
-
 	public void calculateRewards(User user) throws IOException {
-		List<VisitedLocation> userLocations = user.getVisitedLocations();
-		List<Attraction> attractions = gpsUtilController.getAttractions();
+		List<VisitedLocation> userLocations = new CopyOnWriteArrayList<>(user.getVisitedLocations());
+		List<Attraction> attractions = new CopyOnWriteArrayList<>(gpsUtilService.getAttractions());
 
-		synchronized (this) {
 		for (VisitedLocation visitedLocation : userLocations){
 			for (Attraction attraction : attractions) {
 				if (user.getUserRewards().stream().noneMatch(r -> r.attraction.attractionName.equals(attraction.attractionName))) {
@@ -88,31 +90,7 @@ public class RewardsService {
 				}
 				}
 			}
-		}
 	}
-
-
-	public void nonSynchCalculateRewards(User user) throws IOException {
-		List<VisitedLocation> userLocations = user.getVisitedLocations();
-		List<Attraction> attractions = gpsUtilController.getAttractions();
-
-			userLocations.forEach(visitedLocation -> {
-				attractions.forEach(attraction->{
-					if (user.getUserRewards().stream().noneMatch(r -> r.attraction.attractionName.equals(attraction.attractionName))) {
-						if (nearAttraction(visitedLocation, attraction)) {
-							try {
-								user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				});
-			});
-
-	}
-
-
 
 	public boolean isWithinAttractionProximity(Attraction attraction, Location visitedLocation) {
 		return getDistance(attraction, visitedLocation) < attractionProximityRange;

@@ -5,6 +5,10 @@ import Modeles.Location;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Modele de donnéew pour la Localisation de k'utilisateur
+ */
+
 public class UserLocation {
 
     private UUID userUuid;

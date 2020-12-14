@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestRewardsService" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-12-14T17:22:45" hostname="slingshot-MS-7C37" time="13.277">
+  <properties/>
+  <testcase name="nearAllAttractions" classname="tourGuide.TestRewardsService" time="12.211"/>
+  <testcase name="userGetRewards" classname="tourGuide.TestRewardsService" time="1.046"/>
+  <testcase name="isWithinAttractionProximity" classname="tourGuide.TestRewardsService" time="0.02"/>
+  <system-out><![CDATA[18:22:45.775 [Test worker] DEBUG io.netty.util.internal.logging.InternalLoggerFactory - Using SLF4J as the default logging framework
+18:22:45.802 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - -Dio.netty.noUnsafe: false
+18:22:45.802 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - Java version: 8
+18:22:45.803 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+18:22:45.803 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+18:22:45.804 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+18:22:45.804 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+18:22:45.805 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+18:22:45.805 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+18:22:45.805 [Test worker] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+18:22:45.805 [Test worker] DEBUG io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+18:22:45.805 [Test worker] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: /tmp (java.io.tmpdir)
+18:22:45.806 [Test worker] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+18:22:45.807 [Test worker] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.maxDirectMemory: 7486832640 bytes
+18:22:45.807 [Test worker] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+18:22:45.807 [Test worker] DEBUG io.netty.util.internal.CleanerJava6 - java.nio.ByteBuffer.cleaner(): available
+18:22:45.807 [Test worker] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+18:22:45.810 [Test worker] DEBUG io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+18:22:45.810 [Test worker] DEBUG io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+18:22:45.812 [Test worker] DEBUG io.netty.util.NetUtil - Loopback interface: lo (lo, 0:0:0:0:0:0:0:1%lo)
+18:22:45.812 [Test worker] DEBUG io.netty.util.NetUtil - /proc/sys/net/core/somaxconn: 4096
+18:22:45.816 [Test worker] DEBUG reactor.util.Loggers$LoggerFactory - Using Slf4j logging framework
+18:22:45.831 [Test worker] DEBUG reactor.netty.tcp.TcpResources - [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=16, workerCount=16}
+18:22:45.831 [Test worker] DEBUG reactor.netty.tcp.TcpResources - [http] resources will use the default ConnectionProvider: PooledConnectionProvider {name=http, poolFactory=reactor.netty.resources.ConnectionProvider$$Lambda$72/1959451645@43e93233}
+18:22:45.881 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:22:45.881 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:22:45.887 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
+18:22:45.887 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:22:45.893 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+18:22:45.925 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+18:22:45.929 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:45.947 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:45.949 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:46.033 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=5c85a5c0-1698-490c-9ae3-3d00db24684e&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:46.033 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:46.679 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:46.680 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:46.687 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=83d1479a-c81b-4eb8-a129-0178add4a1a5&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:46.687 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:46.912 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:46.912 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:46.916 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=1e9f2caa-b3b9-45b5-9cfb-a40cba6218f9&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:46.917 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:47.059 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:47.060 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:47.065 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=35dffb6a-73bc-4644-96dd-80e75355a634&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:47.065 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:47.815 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:47.815 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:47.819 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=02c1f243-7fb7-4c4f-acba-b5c5f6c757fa&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:47.820 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:48.306 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:48.307 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:48.313 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=3a287fa2-cec2-4402-8ff9-8be3b0c357a2&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:48.313 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:48.777 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:48.777 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:48.781 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=78aa8ec1-9920-4a19-b84e-3f3716ddf003&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:48.781 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:49.719 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:49.720 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:49.724 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=afc5fc26-fdef-4019-9abd-304be2f73829&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:49.724 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:49.836 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:49.836 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:49.839 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=3b520260-8504-4b01-adfd-760b07f0ffff&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:49.840 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:50.805 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:50.806 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:50.810 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=50a48b30-b7b1-4fd9-b489-0accb8f350d2&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:50.810 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:51.034 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:51.034 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:51.038 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=295b9f2f-7a97-4716-93ce-11c176c3f2a0&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:51.038 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:51.783 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:51.783 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:51.787 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=2ec0df80-c8c6-4fe6-81b4-c434d8847f2a&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:51.787 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:51.815 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:51.815 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:51.818 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=21cf54b5-00ce-4807-9261-c48091db1ac4&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:51.818 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:52.510 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:52.510 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:52.514 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=ffd24c9f-7bef-4173-97b2-6c822af9a136&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:52.514 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:52.996 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:52.996 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:53.000 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=c6d0a99d-82ea-47f2-87e0-d717d96aeba5&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:53.000 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:53.872 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:53.873 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:53.876 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=722548bd-9c50-4404-9a87-9709e9fd096f&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:53.877 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:54.596 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:54.597 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:54.600 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=2fd3b525-cac6-4ddf-a3e7-2dcd75b220ff&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:54.600 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:55.327 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:55.327 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:55.330 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=7b56ce51-9fd3-482d-9351-73d6c148233b&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:55.331 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:55.696 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:55.696 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:55.699 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=3000cc22-295d-45ca-b275-3be3b917b4eb&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:55.699 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:56.178 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:56.178 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:56.181 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=4fdb6404-e311-4e92-a1a4-22be309768df&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:56.182 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:56.862 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:56.863 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:56.866 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=015981ac-6134-4ca3-a6c5-686735f511b8&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:56.866 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:56.940 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:56.940 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:56.943 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=97197888-0a58-400d-a537-c615c66aebdd&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:56.943 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.048 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.048 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.051 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=bda982b5-301e-4613-94bf-5844ac3db5fa&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:57.052 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.065 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.065 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.068 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=b58f3382-f519-40d6-87de-3a079beb7c9a&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:57.069 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.337 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.337 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.340 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=f5e3e323-6162-4c34-8d73-1ba81818d474&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:57.341 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.490 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.490 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.493 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=42722181-4717-4b74-b69a-a867579bbcc1&userId=310e0929-caa1-4c26-9492-8eccf39340d7
+18:22:57.494 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.572 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.572 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.575 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+18:22:57.576 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.587 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.588 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.595 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:22:57.595 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:22:57.595 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:22:57.595 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:22:57.595 [pool-6-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+18:22:57.596 [pool-6-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+18:22:57.596 [pool-6-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+18:22:57.597 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+18:22:57.597 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.608 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.609 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.615 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=9a0c617f-24a5-4a09-a993-f1252da0c650
+18:22:57.615 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.697 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.698 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.704 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+18:22:57.704 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:57.715 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:57.716 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:57.724 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.3:8070/getAttractionRewardPoints?attractionId=65670ae6-e433-4724-9a04-628139a27f23&userId=9a0c617f-24a5-4a09-a993-f1252da0c650
+18:22:57.724 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:58.639 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:58.639 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+18:22:58.643 [Test worker] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+18:22:58.643 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+18:22:58.655 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+18:22:58.655 [Test worker] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "application/json;charset=UTF-8"
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

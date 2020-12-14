@@ -17,7 +17,9 @@ import tourGuide.service.TourGuideService;
 import tourGuide.Modeles.User;
 import tourGuide.Modeles.UserLocation;
 
-
+/**
+ * Controller TourGuide permettant d'exposer les URL aux utilisateurs
+ */
 
 @RestController
 public class TourGuideController {
@@ -28,12 +30,22 @@ public class TourGuideController {
     RestTemplate restTemplate;
 
 
+    /**
+     * Controller page principale
+     * @return : Retour page d'acceuil
+     */
     @RequestMapping("/")
     public String index() {
         return "Greetings from TourGuide!";
     }
 
 
+    /**
+     * Controller permet de recuperer la Localisation de l'utilisateur
+     * @param userName : nom de l'utilisateur
+     * @return : Retourne les infos de localisation
+     * @throws IOException : Exception
+     */
     @RequestMapping("/getLocation")
     public String getLocation(@RequestParam String userName) throws IOException {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
@@ -50,17 +62,32 @@ public class TourGuideController {
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
 
+    /**
+     * Controller permettant de recuperer les 5 plus proches attractions
+     * @param userName : Nom de l'utilisateur
+     * @return : Retourn les 5 plus proches Attractions
+     * @throws IOException : Exception
+     */
     @RequestMapping("/getNearbyAttractions")
     public String getNearbyAttractions(@RequestParam String userName) throws IOException {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
         return JsonStream.serialize(tourGuideService.getFiveAttrations(visitedLocation, getUser(userName)));
     }
 
+    /**
+     * Controller permettant de recuperer les Rewards de l'Utilisateur
+     * @param userName : Nom de l'utilisateur
+     * @return : Retourne le Rewards de l'utilisateur
+     */
     @RequestMapping("/getRewards")
     public String getRewards(@RequestParam String userName) {
         return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));
     }
 
+    /**
+     * Controller permettant de recuperer toutes les Localisation
+     * @return : Retourne toutes les Localisations de tous les utilisateurs
+     */
     @RequestMapping("/getAllCurrentLocations")
     public List<UserLocation> getAllCurrentLocations() {
         // TODO: Get a list of every user's most recent location as JSON : Done
@@ -78,6 +105,12 @@ public class TourGuideController {
         return tourGuideService.getUserLocation();
     }
 
+    /**
+     * Controller permettant de recuperer les offres de voyages
+     * @param userName : Nom de l'utilisateur
+     * @return : Retourne Les offres
+     * @throws IOException : Exception
+     */
     @RequestMapping("/getTripDeals")
     public String getTripDeals(@RequestParam String userName) throws IOException {
         List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
@@ -89,6 +122,20 @@ public class TourGuideController {
     }
 
 
+    /**
+     * Controller permettant de mettre a jour les preferences utilisateurs
+     *
+     * @param userName : Nom de l'utilisateur
+     * @param attractionProximity : nbr Miles des attractions
+     * @param higherPrice : Prix minimum
+     * @param lowerPrice : Prix maximum
+     * @param adults : Nbr d'Adultes
+     * @param childrens : Nbr d'enfants
+     * @param nbrAttractions : Nbr d'Attractions
+     * @param ticketQuantity : Nbr de Ticket
+     * @param tripDuration : Nbr de jour du voyage
+     * @return : Retourne l'ensemble des preferences utilisateur
+     */
     @PostMapping("/setPreferences")
     public UserPreferences setPreference(@RequestParam String userName, int attractionProximity, Double higherPrice, Double lowerPrice, int adults, int childrens, int nbrAttractions, int ticketQuantity, int tripDuration) {
 

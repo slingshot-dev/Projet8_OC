@@ -6,14 +6,12 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tourGuide.Modeles.UserPreferences;
-import tourGuide.controlers.GpsUtilController;
-import tourGuide.controlers.RewardCentralController;
-import tourGuide.controlers.TripPricerController;
+import tourGuide.service.GpsUtilService;
+import tourGuide.service.RewardCentralService;
+import tourGuide.service.TripPricerService;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.*;
 import tourGuide.Modeles.User;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,12 +53,12 @@ public class TestPerformance {
 //		int nbProcs = Runtime.getRuntime().availableProcessors();
 
 		Locale.setDefault(Locale.US);
-		GpsUtilController gpsUtilController = new GpsUtilController();
-		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
-		TripPricerController tripPricerController = new TripPricerController();
+		GpsUtilService gpsUtilService = new GpsUtilService();
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
+		TripPricerService tripPricerService = new TripPricerService();
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
-		InternalTestHelper.setInternalUserNumber(10000);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+		InternalTestHelper.setInternalUserNumber(5000);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 
 		List<User> allUsers = new ArrayList<>();
 		allUsers = tourGuideService.getAllUsers();
@@ -72,7 +70,6 @@ public class TestPerformance {
 		for(User user : allUsers) {
 			tourGuideService.asynchroneTrackUserLocation(user);
 		}
-
 
 		// Appel d'une methode Asynchrone pour Executor Shutdown et AwaitTermination
 		tourGuideService.asynchroneFinaliseExecutor();
@@ -92,16 +89,16 @@ public class TestPerformance {
 
 	@Test
 	public void highVolumeGetRewards() throws IOException, InterruptedException {
-		GpsUtilController gpsUtil = new GpsUtilController();
-		TripPricerController tripPricerController = new TripPricerController();
-		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentralController());
+		GpsUtilService gpsUtil = new GpsUtilService();
+		TripPricerService tripPricerService = new TripPricerService();
+		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentralService());
 
 		// Users should be incremented up to 100,000, and test finishes within 20 minutes
-		InternalTestHelper.setInternalUserNumber(10000);
+		InternalTestHelper.setInternalUserNumber(100000);
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerController);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService, tripPricerService);
 
 		Attraction attraction = gpsUtil.getAttractions().get(0);
 		List<User> allUsers = new ArrayList<>();

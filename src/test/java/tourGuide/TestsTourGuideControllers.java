@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import tourGuide.Modeles.User;
 import tourGuide.Modeles.UserPreferences;
-import tourGuide.controlers.GpsUtilController;
+import tourGuide.service.GpsUtilService;
 import tourGuide.service.TourGuideService;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         WebApplicationContext wac;
 
         @Autowired
-        GpsUtilController gpsUtilController;
+        GpsUtilService gpsUtilService;
 
         @Autowired
         TourGuideService tourGuideService;

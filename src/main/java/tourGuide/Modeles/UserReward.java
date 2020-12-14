@@ -3,6 +3,10 @@ package tourGuide.Modeles;
 import Modeles.Attraction;
 import Modeles.VisitedLocation;
 
+/**
+ * Modele de données des Rewards de l'utilisateur
+ */
+
 public class UserReward {
 
 	public final VisitedLocation visitedLocation;

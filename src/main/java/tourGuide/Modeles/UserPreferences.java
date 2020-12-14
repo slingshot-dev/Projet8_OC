@@ -5,6 +5,9 @@ import javax.money.Monetary;
 
 import org.javamoney.moneta.Money;
 
+/**
+ * Modele de données des preferences utilisateurs
+ */
 
 public class UserPreferences {
 	

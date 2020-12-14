@@ -10,6 +10,11 @@ import Modeles.Provider;
 import Modeles.VisitedLocation;
 
 
+/**
+ * Modele de données de l'utiliateur
+ */
+
+
 public class User {
 	private final UUID userId;
 	private final String userName;

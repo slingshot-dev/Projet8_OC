@@ -2,22 +2,15 @@ package tourGuide.Modeles;
 
 import Modeles.Location;
 
-public class AttractionsFromUser {
+/**
+ * Classe Attration liée a l'utilisateur
+ */
 
-    //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
-    //  Return a new JSON object that contains:
-    // Name of Tourist attraction,
-    // Tourist attractions lat/long,
-    // The user's location lat/long,
-    // The distance in miles between the user's location and each of the attractions.
-    // The reward points for visiting each Attraction.
-    //    Note: Attraction reward points can be gathered from RewardsCentral
+public class AttractionsFromUser {
 
     private String attractionName;
     private double attractionLatitude;
     private double attractionLongitude;
-/*    private double userLocationLatitude;
-    private double userLocationLongitude;*/
     private Location userLocation;
     private double distance;
     private int rewardPoints;
