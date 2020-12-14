@@ -1,6 +1,7 @@
 package tourGuide.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.*;
 
 import Modeles.Attraction;
@@ -23,9 +24,10 @@ public class RewardsService {
 	// proximity in miles
 	private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
-	private int attractionProximityRange = 20000;
+	private int attractionProximityRange = 200;
 	private final GpsUtilController gpsUtilController;
 	private final RewardCentralController rewardsCentral;
+	private Integer nbAddReward = 0;
 
 
 	public RewardsService(GpsUtilController gpsUtilController, RewardCentralController rewardsCentral) {
@@ -46,17 +48,57 @@ public class RewardsService {
 		this.attractionProximityRange = attractionProximityRange;
 	}
 
+	ExecutorService executorService = Executors.newFixedThreadPool(5000);
 
-	public void AsynchroneCalculateRewards(User user) throws IOException {
-		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
-		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>();
+	public void asynchroneCalculateRewards(User user){
 
-		attractions.addAll(gpsUtilController.getAttractions());
-		userLocations.addAll(user.getVisitedLocations());
+			Runnable runnableTask = () -> {
+				try {
+					nonSynchCalculateRewards(user);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			};
+			executorService.submit(runnableTask);
+		}
 
-		for(VisitedLocation visitedLocation : userLocations) {
-				for (Attraction attraction : attractions) {
-					if (user.getUserRewards().stream().filter(r -> r.attraction.getAttractionName().equals(attraction.getAttractionName())).count() == 0) {
+
+		public void asynchroneFinaliseExecutor() throws InterruptedException {
+			executorService.shutdown();
+			executorService.awaitTermination(250, TimeUnit.SECONDS);
+		}
+
+
+
+	public void calculateRewards(User user) throws IOException {
+		List<VisitedLocation> userLocations = user.getVisitedLocations();
+		List<Attraction> attractions = gpsUtilController.getAttractions();
+
+		synchronized (this) {
+		for (VisitedLocation visitedLocation : userLocations){
+			for (Attraction attraction : attractions) {
+				if (user.getUserRewards().stream().noneMatch(r -> r.attraction.attractionName.equals(attraction.attractionName))) {
+					if (nearAttraction(visitedLocation, attraction)) {
+						try {
+							user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				}
+			}
+		}
+	}
+
+
+	public void nonSynchCalculateRewards(User user) throws IOException {
+		List<VisitedLocation> userLocations = user.getVisitedLocations();
+		List<Attraction> attractions = gpsUtilController.getAttractions();
+
+			userLocations.forEach(visitedLocation -> {
+				attractions.forEach(attraction->{
+					if (user.getUserRewards().stream().noneMatch(r -> r.attraction.attractionName.equals(attraction.attractionName))) {
 						if (nearAttraction(visitedLocation, attraction)) {
 							try {
 								user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
@@ -65,30 +107,10 @@ public class RewardsService {
 							}
 						}
 					}
-				}
-		}
+				});
+			});
+
 	}
-
-
-
-
-	public synchronized void calculateRewards(User user) throws IOException {
-		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
-		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>();
-		attractions.addAll(gpsUtilController.getAttractions());
-		userLocations.addAll(user.getVisitedLocations());
-
-		for (VisitedLocation visitedLocation : userLocations) {
-			for (Attraction attraction : attractions) {
-				if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
-					if (nearAttraction(visitedLocation, attraction)) {
-						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
-					}
-				}
-			}
-		}
-	}
-
 
 
 
@@ -100,7 +122,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.getLocation()) < proximityBuffer;
 	}
 	
-	int getRewardPoints(Attraction attraction, User user) throws IOException {
+	public int getRewardPoints(Attraction attraction, User user) throws IOException {
 		return rewardsCentral.getAttractionRewardPoints(attraction.getAttractionId(), user.getUserId());
 	}
 	
@@ -114,8 +136,7 @@ public class RewardsService {
                                + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
 
         double nauticalMiles = 60 * Math.toDegrees(angle);
-        double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
-        return statuteMiles;
+		return STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
 	}
 
 }

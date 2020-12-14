@@ -16,7 +16,11 @@ import Modeles.Provider;
 import Modeles.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import tourGuide.Modeles.*;
 import tourGuide.controlers.GpsUtilController;
 import tourGuide.controlers.TripPricerController;
@@ -30,17 +34,25 @@ public class TourGuideService {
 	private final GpsUtilController gpsUtilController;
 	private final RewardsService rewardsService;
 //	private final TripPricer tripPricer = new TripPricer();
-	private final TripPricerController tripPricer;
+/*	private final TripPricerController tripPricer;*/
 	public final Tracker tracker;
 	boolean testMode = true;
-	ExecutorService executorService = Executors.newFixedThreadPool(10000);
+	ExecutorService executorService = Executors.newFixedThreadPool(5000);
 
 
+	@Autowired
+	private TripPricerController tripPricer;
 
 	public TourGuideService(GpsUtilController gpsUtilController, RewardsService rewardsService, TripPricerController tripPricer) {
 		this.gpsUtilController = gpsUtilController;
 		this.rewardsService = rewardsService;
 		this.tripPricer = tripPricer;
+
+/*	public TourGuideService(GpsUtilController gpsUtilController, RewardsService rewardsService) {
+		this.gpsUtilController = gpsUtilController;
+		this.rewardsService = rewardsService;*/
+
+
 
 		if(testMode) {
 			logger.info("TestMode enabled");
@@ -79,13 +91,13 @@ public class TourGuideService {
 	
 	public List<Provider> getTripDeals(User user) throws IOException {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List <Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
+		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
 				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
 		user.setTripDeals(providers);
 		return providers;
 	}
 
-	public void AsynchroneTrackUserLocation(User user) throws IOException {
+	public void asynchroneTrackUserLocation(User user) {
 
 		Runnable runnableTask = () -> {
 			try {
@@ -98,10 +110,17 @@ public class TourGuideService {
 		}
 
 
-		public void AsynchroneFinaliseExecutor() throws InterruptedException {
+		public void asynchroneFinaliseExecutor() throws InterruptedException {
 
-			executorService.shutdownNow();
-			executorService.awaitTermination(60, TimeUnit.SECONDS);
+			executorService.shutdown();
+/*			try {
+				if (!executorService.awaitTermination(20, TimeUnit.MINUTES)) {
+					executorService.shutdownNow();
+				}
+			} catch (InterruptedException e) {
+				executorService.shutdownNow();
+			}*/
+			executorService.awaitTermination(250, TimeUnit.SECONDS);
 
 		}
 
@@ -109,7 +128,7 @@ public class TourGuideService {
 
 	public VisitedLocation trackUserLocation(User user) throws IOException {
 
-				System.out.println("debut tache " + Thread.currentThread().getName());
+//				System.out.println("debut tache " + Thread.currentThread().getName());
 				VisitedLocation visitedLocation = gpsUtilController.getUserLocation(user.getUserId());
 				user.addToVisitedLocations(visitedLocation);
 				rewardsService.calculateRewards(user);
@@ -131,6 +150,8 @@ public class TourGuideService {
 
 
 	public List<AttractionsFromUser> getFiveAttrations(VisitedLocation visitedLocation, User user) throws IOException {
+
+		gpsUtilController.getAttractions();
 
 		List<Attraction> attractions = gpsUtilController.getAttractions();
 		List<AttractionsFromUser> allAttractions = attractions.parallelStream().map(a -> {

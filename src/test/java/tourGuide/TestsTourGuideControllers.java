@@ -1,17 +1,19 @@
 package tourGuide;
 
+import org.junit.Before;
 import org.junit.Test;
-import java.util.UUID;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import tourGuide.Modeles.User;
 import tourGuide.Modeles.UserPreferences;
-import tourGuide.controlers.TourGuideController;
+import tourGuide.controlers.GpsUtilController;
 import tourGuide.service.TourGuideService;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -19,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @SpringBootTest
     @AutoConfigureMockMvc
+    @RunWith(SpringRunner.class)
     public class TestsTourGuideControllers {
 
         private User user;
@@ -27,103 +30,54 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @Autowired
         MockMvc mockMvc;
 
+        @Autowired
+        WebApplicationContext wac;
+
+        @Autowired
+        GpsUtilController gpsUtilController;
+
+        @Autowired
+        TourGuideService tourGuideService;
+
+
+        @Before
+        public void setup() {
+            this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        }
+
+
+        @Test
+        public void getAccueil() throws Exception {
+            // Arange & Act
+            mockMvc.perform(get("/"))
+            // Assert
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print());
+        }
+
+        @Test
+        public void getAllLocation() throws Exception {
+
+            // Arange & Act
+            mockMvc.perform(get("/getAllCurrentLocations"))
+                    // Assert
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print());
+        }
+
+
         @Test
         public void getNearbyAttractions() throws Exception {
-            // Arange & Act
-/*            user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
+/*            user = tourGuideService.getUser("internalUser1");
             userPreferences =new UserPreferences(1,"US",0.0d,1000.0d,5,2,1,1);
             user.setUserPreferences(userPreferences);*/
 
-            mockMvc.perform(get("http://localhost:8090/"))
-//                    .param("userName", "jon"))
-                    // Assert
-                    .andExpect(status().isOk());
-        }
-/*
-        @Test
-        public void getBidListAdd() throws Exception {
             // Arange & Act
-            this.mockMvc.perform(get("/bidList/add"))
+            mockMvc.perform(post("/getNearbyAttractions?userName=internalUser1"))
                     // Assert
-                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print());
+
         }
-
-
-        @Test
-        public void getBidListValidateOk() throws Exception {
-            // Arange & Act
-            this.mockMvc.perform(post("/bidList/validate")
-                    .param("bidListId", "1")
-                    .param("account", "NameTests")
-                    .param("type", "Desctests")
-                    .param("bidQuantity", "10"))
-                    // Assert
-                    .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                    .andDo(MockMvcResultHandlers.print());
-        }
-        @Test
-        public void getBidListValidateKo() throws Exception {
-            // Arange & Act
-            this.mockMvc.perform(post("/bidList/validate")
-                    .param("account", "")
-                    .param("type", "Desctests")
-                    .param("bidQuantity", "10"))
-                    // Assert
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.view().name("bidList/add"))
-                    .andDo(MockMvcResultHandlers.print());
-        }
-
-        @Test
-        public void getBidListUpdate() throws Exception {
-            // Arange & Act
-            this.mockMvc.perform(get("/bidList/update/{id}", "1"))
-                    // Assert
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andDo(MockMvcResultHandlers.print());
-        }
-
-        @Test
-        public void postBidListUpdate() throws Exception {
-            // Arange & Act
-            this.mockMvc.perform(post("/bidList/update/{id}", "1")
-                    .param("account", "NameTestsUpdate")
-                    .param("type", "DescTestsUpdate")
-                    .param("bidQuantity", "50"))
-                    // Assert
-                    .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                    .andDo(MockMvcResultHandlers.print());
-        }
-
-        @Test
-        public void postBidListUpdateKo() throws Exception {
-            // Arange & Act
-            this.mockMvc.perform(post("/bidList/update/{id}", "1")
-                    .param("account", "")
-                    .param("type", "DescTestsUpdate")
-                    .param("bidQuantity", "50"))
-                    // Assert
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.view().name("bidList/update"))
-                    .andDo(MockMvcResultHandlers.print());
-        }
-
-        @Test
-        public void BidListDelete() throws Exception {
-            // Arange & Act
-            this.mockMvc.perform(get("/bidList/delete/{id}", "2"))
-                    // Assert
-                    .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                    .andDo(MockMvcResultHandlers.print());
-        }
-
-    }*/
-
-
-
-
-
-
 
 }

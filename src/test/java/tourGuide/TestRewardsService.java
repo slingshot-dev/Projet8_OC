@@ -3,6 +3,10 @@ package tourGuide;
 import Modeles.Attraction;
 import Modeles.VisitedLocation;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import tourGuide.controlers.GpsUtilController;
 import tourGuide.controlers.RewardCentralController;
 import tourGuide.controlers.TripPricerController;
@@ -20,6 +24,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SpringBootTest
 public class TestRewardsService {
 
 	@Test
@@ -32,6 +37,7 @@ public class TestRewardsService {
 
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+//		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		Attraction attraction = gpsUtilController.getAttractions().get(0);
@@ -50,7 +56,6 @@ public class TestRewardsService {
 		assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
 	}
 
-	// Needs fixed - can throw ConcurrentModificationException
 	@Test
 	public void nearAllAttractions() throws IOException {
 		GpsUtilController gpsUtilController = new GpsUtilController();
@@ -60,7 +65,6 @@ public class TestRewardsService {
 
 		InternalTestHelper.setInternalUserNumber(1);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
-
 
 		rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
 		List<UserReward> userRewards = tourGuideService.getUserRewards(tourGuideService.getAllUsers().get(0));

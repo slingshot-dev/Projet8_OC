@@ -4,12 +4,19 @@ import Modeles.Attraction;
 import Modeles.Provider;
 import Modeles.VisitedLocation;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import tourGuide.Modeles.UserPreferences;
 import tourGuide.controlers.GpsUtilController;
 import tourGuide.controlers.RewardCentralController;
 import tourGuide.controlers.TripPricerController;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.*;
 import tourGuide.Modeles.User;
+
+import javax.money.Monetary;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -18,6 +25,9 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SpringBootTest
+@AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
 public class TestTourGuideService {
 
 
@@ -31,6 +41,7 @@ public class TestTourGuideService {
 		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+//		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
@@ -45,6 +56,7 @@ public class TestTourGuideService {
 		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+//		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
@@ -68,6 +80,7 @@ public class TestTourGuideService {
 		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+//		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
@@ -90,6 +103,7 @@ public class TestTourGuideService {
 		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+//		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
@@ -108,6 +122,7 @@ public class TestTourGuideService {
 		rewardsService.setAttractionProximityRange(Integer.MAX_VALUE);
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+//		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
@@ -126,8 +141,11 @@ public class TestTourGuideService {
 		RewardsService rewardsService = new RewardsService(gpsUtilController, new RewardCentralController());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService, tripPricerController);
+//		TourGuideService tourGuideService = new TourGuideService(gpsUtilController, rewardsService);
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
+		UserPreferences userPreferences = new UserPreferences(1,"US",0.0d,1000.0d,5,2,1,1);
+		user.setUserPreferences(userPreferences);
 
 		List<Provider> providers = tourGuideService.getTripDeals(user);
 		
