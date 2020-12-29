@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AttractionsFromUser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.Modeles</a> &gt; <span class="el_source">AttractionsFromUser.java</span></div><h1>AttractionsFromUser.java</h1><pre class="source lang-java linenums">package tourGuide.Modeles;
+
+import Modeles.Location;
+
+/**
+ * Classe Attration liée a l'utilisateur
+ */
+
+public class AttractionsFromUser {
+
+    private String attractionName;
+    private double attractionLatitude;
+    private double attractionLongitude;
+    private Location userLocation;
+    private double distance;
+    private int rewardPoints;
+
+<span class="fc" id="L18">    public AttractionsFromUser(String attractionName, double attractionLatitude, double attractionLongitude, Location userLocation, double distance, int rewardPoints) {</span>
+<span class="fc" id="L19">        this.attractionName = attractionName;</span>
+<span class="fc" id="L20">        this.attractionLatitude = attractionLatitude;</span>
+<span class="fc" id="L21">        this.attractionLongitude = attractionLongitude;</span>
+<span class="fc" id="L22">        this.userLocation = userLocation;</span>
+<span class="fc" id="L23">        this.distance = distance;</span>
+<span class="fc" id="L24">        this.rewardPoints = rewardPoints;</span>
+<span class="fc" id="L25">    }</span>
+
+    public String getAttractionName() {
+<span class="nc" id="L28">        return attractionName;</span>
+    }
+
+    public void setAttractionName(String attractionName) {
+<span class="nc" id="L32">        this.attractionName = attractionName;</span>
+<span class="nc" id="L33">    }</span>
+
+    public double getAttractionLatitude() {
+<span class="nc" id="L36">        return attractionLatitude;</span>
+    }
+
+    public void setAttractionLatitude(double attractionLatitude) {
+<span class="nc" id="L40">        this.attractionLatitude = attractionLatitude;</span>
+<span class="nc" id="L41">    }</span>
+
+    public double getAttractionLongitude() {
+<span class="nc" id="L44">        return attractionLongitude;</span>
+    }
+
+    public void setAttractionLongitude(double attractionLongitude) {
+<span class="nc" id="L48">        this.attractionLongitude = attractionLongitude;</span>
+<span class="nc" id="L49">    }</span>
+
+    public Location getUserLocation() {
+<span class="nc" id="L52">        return userLocation;</span>
+    }
+
+    public void setUserLocation(Location userLocation) {
+<span class="nc" id="L56">        this.userLocation = userLocation;</span>
+<span class="nc" id="L57">    }</span>
+
+    public double getDistance() {
+<span class="fc" id="L60">        return distance;</span>
+    }
+
+    public void setDistance(double distance) {
+<span class="nc" id="L64">        this.distance = distance;</span>
+<span class="nc" id="L65">    }</span>
+
+    public int getRewardPoints() {
+<span class="nc" id="L68">        return rewardPoints;</span>
+    }
+
+    public void setRewardPoints(int rewardPoints) {
+<span class="nc" id="L72">        this.rewardPoints = rewardPoints;</span>
+<span class="nc" id="L73">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

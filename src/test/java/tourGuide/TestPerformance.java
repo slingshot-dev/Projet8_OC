@@ -52,12 +52,13 @@ public class TestPerformance {
 
 //		int nbProcs = Runtime.getRuntime().availableProcessors();
 
+		// Arrange
 		Locale.setDefault(Locale.US);
 		GpsUtilService gpsUtilService = new GpsUtilService();
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentralService());
 		TripPricerService tripPricerService = new TripPricerService();
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
-		InternalTestHelper.setInternalUserNumber(5000);
+		InternalTestHelper.setInternalUserNumber(10000);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 
 		List<User> allUsers = new ArrayList<>();
@@ -66,6 +67,7 @@ public class TestPerformance {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 
+		// act
 		// Appel d'une methode Asynchone de TrackUserLocation qui appelle elle meme TrackUserLocation
 		for(User user : allUsers) {
 			tourGuideService.asynchroneTrackUserLocation(user);
@@ -77,6 +79,7 @@ public class TestPerformance {
 		stopWatch.stop();
 		tourGuideService.tracker.stopTracking();
 
+		// Assert
 		System.out.println("highVolumeTrackLocation: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
 		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 		for (User user : allUsers) {
@@ -89,12 +92,14 @@ public class TestPerformance {
 
 	@Test
 	public void highVolumeGetRewards() throws IOException, InterruptedException {
+
+		// Arrange
 		GpsUtilService gpsUtil = new GpsUtilService();
 		TripPricerService tripPricerService = new TripPricerService();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentralService());
 
 		// Users should be incremented up to 100,000, and test finishes within 20 minutes
-		InternalTestHelper.setInternalUserNumber(100000);
+		InternalTestHelper.setInternalUserNumber(10000);
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -105,6 +110,7 @@ public class TestPerformance {
 		allUsers = tourGuideService.getAllUsers();
 		allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
 
+		// Act
 		for(User user : allUsers) {
 			rewardsService.asynchroneCalculateRewards(user);
 		}
@@ -116,6 +122,7 @@ public class TestPerformance {
 		stopWatch.stop();
 		tourGuideService.tracker.stopTracking();
 
+		// Assert
 		System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
 		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 

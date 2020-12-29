@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class tourGuide.TestTourGuideService</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class tourGuide.TestTourGuideService</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/tourGuide.html">tourGuide</a> &gt; TestTourGuideService</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">6</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.559s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">addUser</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAllUsers</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getNearbyAttractions</td>
+<td class="success">0.116s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getTripDeals</td>
+<td class="success">0.144s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getUserLocation</td>
+<td class="success">0.208s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">trackUser</td>
+<td class="success">0.083s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>10:23:34.522 [Test worker] DEBUG org.springframework.test.context.junit4.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class tourGuide.TestTourGuideService]
+10:23:34.523 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+10:23:34.526 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+10:23:34.535 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.535 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.536 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+10:23:34.536 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.542 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [tourGuide.TestTourGuideService] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+10:23:34.547 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.547 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.548 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=560d5288-c682-4eec-82d0-feff1cfc454d
+10:23:34.548 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.550 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [tourGuide.TestTourGuideService], using SpringBootContextLoader
+10:23:34.552 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [tourGuide.TestTourGuideService]: class path resource [tourGuide/TestTourGuideService-context.xml] does not exist
+10:23:34.552 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [tourGuide.TestTourGuideService]: class path resource [tourGuide/TestTourGuideServiceContext.groovy] does not exist
+10:23:34.552 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [tourGuide.TestTourGuideService]: no resource found for suffixes {-context.xml, Context.groovy}.
+10:23:34.553 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [tourGuide.TestTourGuideService]: TestTourGuideService does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:23:34.577 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.577 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.578 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+10:23:34.578 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.585 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.585 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.586 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+10:23:34.586 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.589 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.589 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.591 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=1cc1c6b0-a821-4f64-a449-aa8dd4a39b7b
+10:23:34.591 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.597 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.597 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.598 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=3f8ae5c9-c181-420a-bb7c-61ea34a43373
+10:23:34.598 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.598 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [tourGuide.TestTourGuideService]
+10:23:34.629 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.629 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.630 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+10:23:34.630 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.641 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.641 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.642 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=1957e4f2-b4f3-4a20-ba37-f39992a76f13
+10:23:34.642 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.665 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/home/slingshot/IdeaProjects/Projet8_OC/build/classes/java/main/tourGuide/Application.class]
+10:23:34.666 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration tourGuide.Application for test class tourGuide.TestTourGuideService
+10:23:34.674 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.674 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.676 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+10:23:34.676 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.687 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.687 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.688 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=1172abda-e88e-4af3-81f7-2b390d002b15
+10:23:34.688 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.712 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.712 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.714 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+10:23:34.714 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.725 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.725 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.726 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=9c4fc363-5693-438a-8b1b-8d90a5197f3a
+10:23:34.726 [pool-6-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.746 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [tourGuide.TestTourGuideService]: using defaults.
+10:23:34.746 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+10:23:34.751 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.751 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.752 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getAttractions
+10:23:34.753 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.759 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@14f61f9f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@24eda32b, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@7a457a33, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@7d8f318f, org.springframework.test.context.support.DirtiesContextTestExecutionListener@59a1c346, org.springframework.test.context.transaction.TransactionalTestExecutionListener@101cd7a2, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@41d9b370, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@455ee18d, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1232a193, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@64e5d5b0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@68abb86f, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@5a4b7e7e]
+10:23:34.761 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [tourGuide.TestTourGuideService]
+10:23:34.761 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [tourGuide.TestTourGuideService]
+10:23:34.761 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [tourGuide.TestTourGuideService]
+10:23:34.761 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [tourGuide.TestTourGuideService]
+10:23:34.763 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
+10:23:34.763 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as &quot;application/json;charset=UTF-8&quot;
+10:23:34.764 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@48e2a831 testClass = TestTourGuideService, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6a1ee08d testClass = TestTourGuideService, locations = '{}', classes = '{class tourGuide.Application}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@e7e8512, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7e38b47c, [ImportsContextCustomizer@3aeaf8a8 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@198c5dcb, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@50b2809f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@724a982, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@26e02f53], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+10:23:34.764 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [tourGuide.TestTourGuideService]
+10:23:34.764 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [tourGuide.TestTourGuideService]
+10:23:34.765 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - HTTP GET http://17.18.0.2:8050/getUserLocation?userId=864406ad-e73e-4c92-961c-0cf307cdbe00
+10:23:34.765 [pool-3-thread-1] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+10:23:34.780 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.6.RELEASE)
+
+2020-12-29 10:23:35.003  INFO 5818 --- [    Test worker] tourGuide.TestTourGuideService           : Starting TestTourGuideService on slingshot-MS-7C37 with PID 5818 (started by slingshot in /home/slingshot/IdeaProjects/Projet8_OC)
+2020-12-29 10:23:35.003 DEBUG 5818 --- [    Test worker] tourGuide.TestTourGuideService           : Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+2020-12-29 10:23:35.005  INFO 5818 --- [    Test worker] tourGuide.TestTourGuideService           : No active profile set, falling back to default profiles: default
+2020-12-29 10:23:35.922  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:35.922 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:35.942 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 10000 internal test users.
+2020-12-29 10:23:35.943 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:35.944 DEBUG 5818 --- [pool-9-thread-1] tourGuide.tracker.Tracker                : Begin Tracker. Tracking 10000 users.
+2020-12-29 10:23:36.640  INFO 5818 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-12-29 10:23:37.191  INFO 5818 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2020-12-29 10:23:37.192  INFO 5818 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2020-12-29 10:23:37.207  INFO 5818 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-12-29 10:23:37.226  INFO 5818 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 34 ms
+2020-12-29 10:23:37.263  INFO 5818 --- [    Test worker] tourGuide.TestTourGuideService           : Started TestTourGuideService in 2.475 seconds (JVM running for 50.418)
+2020-12-29 10:23:37.425  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:37.425 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:37.425 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 0 internal test users.
+2020-12-29 10:23:37.425 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:37.425 DEBUG 5818 --- [ool-12-thread-1] tourGuide.tracker.Tracker                : Begin Tracker. Tracking 0 users.
+2020-12-29 10:23:37.426 DEBUG 5818 --- [ool-12-thread-1] tourGuide.tracker.Tracker                : Tracker Time Elapsed: 0 seconds.
+2020-12-29 10:23:37.426 DEBUG 5818 --- [ool-12-thread-1] tourGuide.tracker.Tracker                : Tracker sleeping
+2020-12-29 10:23:37.489  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:37.490 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:37.490 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 0 internal test users.
+2020-12-29 10:23:37.490 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:37.490 DEBUG 5818 --- [ool-15-thread-1] tourGuide.tracker.Tracker                : Tracker stopping
+2020-12-29 10:23:37.492  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:37.492 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:37.492 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 0 internal test users.
+2020-12-29 10:23:37.492 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:37.493 DEBUG 5818 --- [ool-18-thread-1] tourGuide.tracker.Tracker                : Begin Tracker. Tracking 0 users.
+2020-12-29 10:23:37.493 DEBUG 5818 --- [ool-18-thread-1] tourGuide.tracker.Tracker                : Tracker Time Elapsed: 0 seconds.
+2020-12-29 10:23:37.493 DEBUG 5818 --- [ool-18-thread-1] tourGuide.tracker.Tracker                : Tracker sleeping
+2020-12-29 10:23:37.637  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:37.637 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:37.638 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 0 internal test users.
+2020-12-29 10:23:37.638 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:37.639 DEBUG 5818 --- [ool-21-thread-1] tourGuide.tracker.Tracker                : Tracker stopping
+2020-12-29 10:23:37.642  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:37.642 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:37.642 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 0 internal test users.
+2020-12-29 10:23:37.642 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:37.642 DEBUG 5818 --- [ool-24-thread-1] tourGuide.tracker.Tracker                : Begin Tracker. Tracking 0 users.
+2020-12-29 10:23:37.642 DEBUG 5818 --- [ool-24-thread-1] tourGuide.tracker.Tracker                : Tracker Time Elapsed: 0 seconds.
+2020-12-29 10:23:37.642 DEBUG 5818 --- [ool-24-thread-1] tourGuide.tracker.Tracker                : Tracker sleeping
+2020-12-29 10:23:37.725  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:37.725 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:37.725 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 0 internal test users.
+2020-12-29 10:23:37.725 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:37.729 DEBUG 5818 --- [ool-27-thread-1] tourGuide.tracker.Tracker                : Begin Tracker. Tracking 0 users.
+2020-12-29 10:23:37.729 DEBUG 5818 --- [ool-27-thread-1] tourGuide.tracker.Tracker                : Tracker Time Elapsed: 0 seconds.
+2020-12-29 10:23:37.729 DEBUG 5818 --- [ool-27-thread-1] tourGuide.tracker.Tracker                : Tracker sleeping
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 4.8.1</a> at 29 déc. 2020 10:23:53</p>
+</div>
+</div>
+</body>
+</html>

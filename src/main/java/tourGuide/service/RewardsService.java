@@ -54,6 +54,7 @@ public class RewardsService {
 
 	ExecutorService executorService = Executors.newFixedThreadPool(5000);
 
+
 	public void asynchroneCalculateRewards(User user){
 
 			Runnable runnableTask = () -> {
@@ -67,10 +68,10 @@ public class RewardsService {
 		}
 
 
-		public void asynchroneFinaliseExecutor() throws InterruptedException {
-			executorService.shutdown();
-			executorService.awaitTermination(250, TimeUnit.SECONDS);
-		}
+	public void asynchroneFinaliseExecutor() throws InterruptedException {
+		executorService.shutdown();
+		executorService.awaitTermination(250, TimeUnit.SECONDS);
+	}
 
 
 	public void calculateRewards(User user) throws IOException {

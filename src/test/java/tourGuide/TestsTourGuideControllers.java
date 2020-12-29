@@ -48,7 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         @Test
         public void getAccueil() throws Exception {
-            // Arange & Act
+            // Arrange & Act
             mockMvc.perform(get("/"))
             // Assert
                     .andExpect(status().isOk())
@@ -58,7 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @Test
         public void getAllLocation() throws Exception {
 
-            // Arange & Act
+            // Arrange & Act
             mockMvc.perform(get("/getAllCurrentLocations"))
                     // Assert
                     .andExpect(status().isOk())
@@ -68,11 +68,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         @Test
         public void getNearbyAttractions() throws Exception {
-/*            user = tourGuideService.getUser("internalUser1");
-            userPreferences =new UserPreferences(1,"US",0.0d,1000.0d,5,2,1,1);
-            user.setUserPreferences(userPreferences);*/
 
-            // Arange & Act
+            // Arrange & Act
             mockMvc.perform(post("/getNearbyAttractions?userName=internalUser1"))
                     // Assert
                     .andExpect(status().isOk())

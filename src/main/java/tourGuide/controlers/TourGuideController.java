@@ -100,8 +100,6 @@ public class TourGuideController {
         //        ...
         //     }
 
-/*        List<UserLocation> result = tourGuideService.getUserLocation();
-        return JsonStream.serialize(result);*/
         return tourGuideService.getUserLocation();
     }
 

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RewardsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.service</a> &gt; <span class="el_source">RewardsService.java</span></div><h1>RewardsService.java</h1><pre class="source lang-java linenums">package tourGuide.service;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.*;
+import Modeles.Attraction;
+import Modeles.Location;
+import Modeles.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import tourGuide.Modeles.User;
+import tourGuide.Modeles.UserReward;
+
+/**
+ * Service permettant :
+ * - le calcul des rewards
+ * - Le calcul de distance
+ * - la verification ds attractions a procimité
+ * - le settings des parametres dez procimité
+ */
+
+@Service
+public class RewardsService {
+	private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+<span class="fc" id="L26">	private final Logger logger = LoggerFactory.getLogger(RewardsService.class);</span>
+
+	// proximity in miles
+<span class="fc" id="L29">	private int defaultProximityBuffer = 10;</span>
+<span class="fc" id="L30">	private int proximityBuffer = defaultProximityBuffer;</span>
+<span class="fc" id="L31">	private int attractionProximityRange = 200;</span>
+	private final GpsUtilService gpsUtilService;
+	private final RewardCentralService rewardsCentral;
+<span class="fc" id="L34">	private Integer nbAddReward = 0;</span>
+
+
+<span class="fc" id="L37">	public RewardsService(GpsUtilService gpsUtilService, RewardCentralService rewardsCentral) {</span>
+<span class="fc" id="L38">		this.gpsUtilService = gpsUtilService;</span>
+<span class="fc" id="L39">		this.rewardsCentral = rewardsCentral;</span>
+<span class="fc" id="L40">	}</span>
+
+
+	public void setProximityBuffer(int proximityBuffer) {
+<span class="fc" id="L44">		this.proximityBuffer = proximityBuffer;</span>
+<span class="fc" id="L45">	}</span>
+
+	public void setDefaultProximityBuffer() {
+<span class="nc" id="L48">		proximityBuffer = defaultProximityBuffer;</span>
+<span class="nc" id="L49">	}</span>
+
+	public void setAttractionProximityRange(int attractionProximityRange) {
+<span class="fc" id="L52">		this.attractionProximityRange = attractionProximityRange;</span>
+<span class="fc" id="L53">	}</span>
+
+<span class="fc" id="L55">	ExecutorService executorService = Executors.newFixedThreadPool(5000);</span>
+
+
+	public void asynchroneCalculateRewards(User user){
+
+<span class="fc" id="L60">			Runnable runnableTask = () -&gt; {</span>
+				try {
+<span class="fc" id="L62">					calculateRewards(user);</span>
+<span class="nc" id="L63">				} catch (IOException e) {</span>
+<span class="nc" id="L64">					e.printStackTrace();</span>
+<span class="fc" id="L65">				}</span>
+<span class="fc" id="L66">			};</span>
+<span class="fc" id="L67">			executorService.submit(runnableTask);</span>
+<span class="fc" id="L68">		}</span>
+
+
+	public void asynchroneFinaliseExecutor() throws InterruptedException {
+<span class="fc" id="L72">		executorService.shutdown();</span>
+<span class="fc" id="L73">		executorService.awaitTermination(250, TimeUnit.SECONDS);</span>
+<span class="fc" id="L74">	}</span>
+
+
+	public void calculateRewards(User user) throws IOException {
+<span class="fc" id="L78">		List&lt;VisitedLocation&gt; userLocations = new CopyOnWriteArrayList&lt;&gt;(user.getVisitedLocations());</span>
+<span class="fc" id="L79">		List&lt;Attraction&gt; attractions = new CopyOnWriteArrayList&lt;&gt;(gpsUtilService.getAttractions());</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (VisitedLocation visitedLocation : userLocations){</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			for (Attraction attraction : attractions) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">				if (user.getUserRewards().stream().noneMatch(r -&gt; r.attraction.attractionName.equals(attraction.attractionName))) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">					if (nearAttraction(visitedLocation, attraction)) {</span>
+						try {
+<span class="fc" id="L86">							user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));</span>
+<span class="nc" id="L87">						} catch (IOException e) {</span>
+<span class="nc" id="L88">							e.printStackTrace();</span>
+<span class="fc" id="L89">						}</span>
+					}
+				}
+<span class="fc" id="L92">				}</span>
+<span class="fc" id="L93">			}</span>
+<span class="fc" id="L94">	}</span>
+
+	public boolean isWithinAttractionProximity(Attraction attraction, Location visitedLocation) {
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		return getDistance(attraction, visitedLocation) &lt; attractionProximityRange;</span>
+	}
+	
+	private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		return getDistance(attraction, visitedLocation.getLocation()) &lt; proximityBuffer;</span>
+	}
+	
+	public int getRewardPoints(Attraction attraction, User user) throws IOException {
+<span class="fc" id="L105">		return rewardsCentral.getAttractionRewardPoints(attraction.getAttractionId(), user.getUserId());</span>
+	}
+	
+	public double getDistance(Location loc1, Location loc2) {
+<span class="fc" id="L109">        double lat1 = Math.toRadians(loc1.getLatitude());</span>
+<span class="fc" id="L110">        double lon1 = Math.toRadians(loc1.getLongitude());</span>
+<span class="fc" id="L111">        double lat2 = Math.toRadians(loc2.getLatitude());</span>
+<span class="fc" id="L112">        double lon2 = Math.toRadians(loc2.getLongitude());</span>
+
+<span class="fc" id="L114">        double angle = Math.acos(Math.sin(lat1) * Math.sin(lat2)</span>
+<span class="fc" id="L115">                               + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));</span>
+
+<span class="fc" id="L117">        double nauticalMiles = 60 * Math.toDegrees(angle);</span>
+<span class="fc" id="L118">		return STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,29 @@
+version: '3'
+services:
+  GpsUtil:
+    image: gpsutils:latest
+    restart: always
+    networks:
+          vpcbr:
+            ipv4_address: 17.18.0.2
+
+
+  RewardCentral:
+    image: rewardcentral:latest
+    restart: always
+    networks:
+          vpcbr:
+            ipv4_address: 17.18.0.3
+
+  TripPricer:
+    image: trippricer:latest
+    restart: always
+    networks:
+          vpcbr:
+            ipv4_address: 17.18.0.4
+
+networks:
+  vpcbr:
+    ipam:
+      config:
+        - subnet: 17.18.0.0/16

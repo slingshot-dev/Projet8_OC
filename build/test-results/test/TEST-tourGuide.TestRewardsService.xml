@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestRewardsService" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-12-29T09:23:37" hostname="slingshot-MS-7C37" time="13.221">
+  <properties/>
+  <testcase name="nearAllAttractions" classname="tourGuide.TestRewardsService" time="12.612"/>
+  <testcase name="userGetRewards" classname="tourGuide.TestRewardsService" time="0.597"/>
+  <testcase name="isWithinAttractionProximity" classname="tourGuide.TestRewardsService" time="0.012"/>
+  <system-out><![CDATA[2020-12-29 10:23:37.842  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:37.842 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:37.842 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 1 internal test users.
+2020-12-29 10:23:37.842 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:37.842 DEBUG 5818 --- [ool-30-thread-1] tourGuide.tracker.Tracker                : Tracker stopping
+2020-12-29 10:23:50.453  INFO 5818 --- [    Test worker] tourGuide.service.TourGuideService       : TestMode enabled
+2020-12-29 10:23:50.453 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Initializing users
+2020-12-29 10:23:50.453 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Created 0 internal test users.
+2020-12-29 10:23:50.453 DEBUG 5818 --- [    Test worker] tourGuide.service.TourGuideService       : Finished initializing users
+2020-12-29 10:23:50.453 DEBUG 5818 --- [ool-33-thread-1] tourGuide.tracker.Tracker                : Begin Tracker. Tracking 0 users.
+2020-12-29 10:23:50.454 DEBUG 5818 --- [ool-33-thread-1] tourGuide.tracker.Tracker                : Tracker Time Elapsed: 0 seconds.
+2020-12-29 10:23:50.454 DEBUG 5818 --- [ool-33-thread-1] tourGuide.tracker.Tracker                : Tracker sleeping
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

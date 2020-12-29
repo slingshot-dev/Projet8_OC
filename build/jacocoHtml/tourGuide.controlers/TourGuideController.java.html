@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TourGuideController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.controlers</a> &gt; <span class="el_source">TourGuideController.java</span></div><h1>TourGuideController.java</h1><pre class="source lang-java linenums">package tourGuide.controlers;
+
+import java.io.IOException;
+import java.util.List;
+
+import Modeles.Provider;
+import Modeles.VisitedLocation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.jsoniter.output.JsonStream;
+import org.springframework.web.client.RestTemplate;
+import tourGuide.Modeles.UserPreferences;
+import tourGuide.service.TourGuideService;
+import tourGuide.Modeles.User;
+import tourGuide.Modeles.UserLocation;
+
+/**
+ * Controller TourGuide permettant d'exposer les URL aux utilisateurs
+ */
+
+@RestController
+<span class="fc" id="L25">public class TourGuideController {</span>
+
+    @Autowired
+    TourGuideService tourGuideService;
+    @Autowired
+    RestTemplate restTemplate;
+
+
+    /**
+     * Controller page principale
+     * @return : Retour page d'acceuil
+     */
+    @RequestMapping(&quot;/&quot;)
+    public String index() {
+<span class="fc" id="L39">        return &quot;Greetings from TourGuide!&quot;;</span>
+    }
+
+
+    /**
+     * Controller permet de recuperer la Localisation de l'utilisateur
+     * @param userName : nom de l'utilisateur
+     * @return : Retourne les infos de localisation
+     * @throws IOException : Exception
+     */
+    @RequestMapping(&quot;/getLocation&quot;)
+    public String getLocation(@RequestParam String userName) throws IOException {
+<span class="nc" id="L51">        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
+<span class="nc" id="L52">        return JsonStream.serialize(visitedLocation.location);</span>
+    }
+
+    //  TODO: Change this method to no longer return a List of Attractions. : Done
+    //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
+    //  Return a new JSON object that contains:
+    // Name of Tourist attraction,
+    // Tourist attractions lat/long,
+    // The user's location lat/long,
+    // The distance in miles between the user's location and each of the attractions.
+    // The reward points for visiting each Attraction.
+    //    Note: Attraction reward points can be gathered from RewardsCentral
+
+    /**
+     * Controller permettant de recuperer les 5 plus proches attractions
+     * @param userName : Nom de l'utilisateur
+     * @return : Retourn les 5 plus proches Attractions
+     * @throws IOException : Exception
+     */
+    @RequestMapping(&quot;/getNearbyAttractions&quot;)
+    public String getNearbyAttractions(@RequestParam String userName) throws IOException {
+<span class="fc" id="L73">        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
+<span class="fc" id="L74">        return JsonStream.serialize(tourGuideService.getFiveAttrations(visitedLocation, getUser(userName)));</span>
+    }
+
+    /**
+     * Controller permettant de recuperer les Rewards de l'Utilisateur
+     * @param userName : Nom de l'utilisateur
+     * @return : Retourne le Rewards de l'utilisateur
+     */
+    @RequestMapping(&quot;/getRewards&quot;)
+    public String getRewards(@RequestParam String userName) {
+<span class="nc" id="L84">        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
+    }
+
+    /**
+     * Controller permettant de recuperer toutes les Localisation
+     * @return : Retourne toutes les Localisations de tous les utilisateurs
+     */
+    @RequestMapping(&quot;/getAllCurrentLocations&quot;)
+    public List&lt;UserLocation&gt; getAllCurrentLocations() {
+        // TODO: Get a list of every user's most recent location as JSON : Done
+        //- Note: does not use gpsUtil to query for their current location,
+        //        but rather gathers the user's current location from their stored location history.
+        //
+        // Return object should be the just a JSON mapping of userId to Locations similar to:
+        //     {
+        //        &quot;019b04a9-067a-4c76-8817-ee75088c3822&quot;: {&quot;longitude&quot;:-48.188821,&quot;latitude&quot;:74.84371}
+        //        ...
+        //     }
+
+<span class="fc" id="L103">        return tourGuideService.getUserLocation();</span>
+    }
+
+    /**
+     * Controller permettant de recuperer les offres de voyages
+     * @param userName : Nom de l'utilisateur
+     * @return : Retourne Les offres
+     * @throws IOException : Exception
+     */
+    @RequestMapping(&quot;/getTripDeals&quot;)
+    public String getTripDeals(@RequestParam String userName) throws IOException {
+<span class="nc" id="L114">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
+<span class="nc" id="L115">        return JsonStream.serialize(providers);</span>
+    }
+
+    private User getUser(String userName) {
+<span class="fc" id="L119">        return tourGuideService.getUser(userName);</span>
+    }
+
+
+    /**
+     * Controller permettant de mettre a jour les preferences utilisateurs
+     *
+     * @param userName : Nom de l'utilisateur
+     * @param attractionProximity : nbr Miles des attractions
+     * @param higherPrice : Prix minimum
+     * @param lowerPrice : Prix maximum
+     * @param adults : Nbr d'Adultes
+     * @param childrens : Nbr d'enfants
+     * @param nbrAttractions : Nbr d'Attractions
+     * @param ticketQuantity : Nbr de Ticket
+     * @param tripDuration : Nbr de jour du voyage
+     * @return : Retourne l'ensemble des preferences utilisateur
+     */
+    @PostMapping(&quot;/setPreferences&quot;)
+    public UserPreferences setPreference(@RequestParam String userName, int attractionProximity, Double higherPrice, Double lowerPrice, int adults, int childrens, int nbrAttractions, int ticketQuantity, int tripDuration) {
+
+<span class="nc" id="L140">        User user = getUser(userName);</span>
+<span class="nc" id="L141">        UserPreferences userPreferences = new UserPreferences();</span>
+
+<span class="nc" id="L143">        userPreferences.setAttractionProximity(attractionProximity);</span>
+<span class="nc" id="L144">        userPreferences.setHighPricePoint(higherPrice);</span>
+<span class="nc" id="L145">        userPreferences.setLowerPricePoint(lowerPrice);</span>
+<span class="nc" id="L146">        userPreferences.setNumberOfAdults(adults);</span>
+<span class="nc" id="L147">        userPreferences.setNumberOfChildren(childrens);</span>
+<span class="nc" id="L148">        userPreferences.setNumberOfAttractions(nbrAttractions);</span>
+<span class="nc" id="L149">        userPreferences.setTicketQuantity(ticketQuantity);</span>
+<span class="nc" id="L150">        userPreferences.setTripDuration(tripDuration);</span>
+
+<span class="nc" id="L152">        user.setUserPreferences(userPreferences);</span>
+
+<span class="nc" id="L154">        return userPreferences;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
